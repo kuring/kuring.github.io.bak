@@ -1,0 +1,712 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="在用CentOS默认的svn客户端工具访问Windows下搭建的subversion时会提示如下错误： 12[kuring@localhost 桌面]$ svn checkout https://192.168.100.100/svn/testsvn: 方法 OPTIONS 失败于 “https://192.168.100.100/svn/test: SSL handshake failed: S">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS6.5下安装svn客户端软件">
+<meta property="og:url" content="http://kuring.me/post/centos6.5_svn/index.html">
+<meta property="og:site_name" content="一只特立独行的鸟">
+<meta property="og:description" content="在用CentOS默认的svn客户端工具访问Windows下搭建的subversion时会提示如下错误： 12[kuring@localhost 桌面]$ svn checkout https://192.168.100.100/svn/testsvn: 方法 OPTIONS 失败于 “https://192.168.100.100/svn/test: SSL handshake failed: S">
+<meta property="og:updated_time" content="2017-04-04T16:33:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS6.5下安装svn客户端软件">
+<meta name="twitter:description" content="在用CentOS默认的svn客户端工具访问Windows下搭建的subversion时会提示如下错误： 12[kuring@localhost 桌面]$ svn checkout https://192.168.100.100/svn/testsvn: 方法 OPTIONS 失败于 “https://192.168.100.100/svn/test: SSL handshake failed: S">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kuring.me/post/centos6.5_svn/"/>
+
+
+
+
+
+  <title> CentOS6.5下安装svn客户端软件 | 一只特立独行的鸟 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一只特立独行的鸟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享我的学习心得，记录我的学习笔记。趁着年轻多学点东西总是正确的~~~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://kuring.me/post/centos6.5_svn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Kuring Lyu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一只特立独行的鸟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CentOS6.5下安装svn客户端软件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-03-22T00:00:00+08:00">
+                2014-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在用CentOS默认的svn客户端工具访问Windows下搭建的subversion时会提示如下错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[kuring@localhost 桌面]$ svn checkout https://192.168.100.100/svn/test</div><div class="line">svn: 方法 OPTIONS 失败于 “https://192.168.100.100/svn/test: SSL handshake failed: SSL 错误：Key usage violation in certificate has been detected. (https://192.168.100.100)</div></pre></td></tr></table></figure>
+<p>通过执行如下命令可以看到svn是支持https协议的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">[kuring@localhost ~]$ svn --version</div><div class="line">svn，版本 1.6.11 (r934486)</div><div class="line">   编译于 Apr 11 2013，16:13:51</div><div class="line"></div><div class="line">版权所有 (C) 2000-2009 CollabNet。</div><div class="line">Subversion 是开放源代码软件，请参阅 http://subversion.tigris.org/ 站点。</div><div class="line">此产品包含由 CollabNet(http://www.Collab.Net/) 开发的软件。</div><div class="line"></div><div class="line">可使用以下的版本库访问模块:</div><div class="line"></div><div class="line">* ra_neon : 通过 WebDAV 协议使用 neon 访问版本库的模块。</div><div class="line">  - 处理“http”方案</div><div class="line">  - 处理“https”方案</div><div class="line">* ra_svn : 使用 svn 网络协议访问版本库的模块。  - 使用 Cyrus SASL 认证</div><div class="line">  - 处理“svn”方案</div><div class="line">* ra_local : 访问本地磁盘的版本库模块。</div><div class="line">  - 处理“file”方案</div></pre></td></tr></table></figure>
+<p>这是由于svn客户端在https协议中使用了GnuTLS库造成的，将其更改为使用openssl库即可。通过执行如下命令可以查看svn使用的库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[kuring@localhost bin]$ ldd svn | grep ssl</div><div class="line">[kuring@localhost bin]$ ldd svn | grep tls</div><div class="line">        libgnutls.so.26 =&gt; /usr/lib64/libgnutls.so.26 (0x00007f33004ad000)</div></pre></td></tr></table></figure>
+<hr>
+<p>下面选择重新编译的方式来安装svn。</p>
+<h1 id="删除subversion"><a href="#删除subversion" class="headerlink" title="删除subversion"></a>删除subversion</h1><p>执行：<code>yum remove subversion</code></p>
+<h1 id="检查openssl安装情况"><a href="#检查openssl安装情况" class="headerlink" title="检查openssl安装情况"></a>检查openssl安装情况</h1><p>这里已经安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[kuring@localhost tmp]$ rpm -qa | grep openssl</div><div class="line">openssl-1.0.1e-15.el6.x86_64</div><div class="line">openssl-devel-1.0.1e-15.el6.x86_64</div></pre></td></tr></table></figure>
+<h1 id="安装neon"><a href="#安装neon" class="headerlink" title="安装neon"></a>安装neon</h1><p>这里选择的安装版本为0.29.6，subversion对neon的版本有要求。如果不是subversion的版本，在执行subversion下的configure文件时并不会报错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[kuring@localhost software]$ tar zvxf neon-0.29.6.tar.gz</div><div class="line">[kuring@localhost software]$ cd neon-0.29.6</div><div class="line">./configure --with-ssl=openssl</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure></p>
+<h1 id="安装apr"><a href="#安装apr" class="headerlink" title="安装apr"></a>安装apr</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">tar zvxf apr-1.5.0.tar.gz</div><div class="line">cd apr-1.5.0</div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
+<h1 id="安装apr-util"><a href="#安装apr-util" class="headerlink" title="安装apr-util"></a>安装apr-util</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">tar zvxf apr-util-1.5.3.tar.gz </div><div class="line">cd apr-util-1.5.3</div><div class="line">./configure --with-apr=/usr/local/apr</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
+<h1 id="下载sqllite"><a href="#下载sqllite" class="headerlink" title="下载sqllite"></a>下载sqllite</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">unzip sqlite-amalgamation-3080401.zip</div><div class="line">mv sqlite-amalgamation-3080401 sqlite-amalgamation</div><div class="line">mv sqlite-amalgamation subversion-1.8.8/	// 将其复制到subversion源码目录下</div></pre></td></tr></table></figure>
+<h1 id="安装subversion"><a href="#安装subversion" class="headerlink" title="安装subversion"></a>安装subversion</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tar zvxf subversion-1.7.16.tar.gz</div><div class="line">./configure --with-ssl --with-neon --with-apr=/usr/local/apr --with-apr-util=/usr/local/apr</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
+<p>然后再执行<code>svn --version</code>命令可以看到已经包含了https协议。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="http://itekblog.com/key-usage-violation-in-certificate-has-been-detected-centos/" target="_blank" rel="external">SSL handshake failed: SSL error: Key usage violation in certificate has been detected CentOS</a></p>
+<h1 id="资料下载"><a href="#资料下载" class="headerlink" title="资料下载"></a>资料下载</h1><p><a href="http://pan.baidu.com/s/1qWNhAqS" target="_blank" rel="external">需要的安装包下载</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/linux_kernel_setup/" rel="next" title="Linux下内核编译安装">
+                <i class="fa fa-chevron-left"></i> Linux下内核编译安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/eclipse_viplugin/" rel="prev" title="在Eclipse中安装viplugin插件">
+                在Eclipse中安装viplugin插件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Kuring Lyu" />
+          <p class="site-author-name" itemprop="name">Kuring Lyu</p>
+           
+              <p class="site-description motion-element" itemprop="description">一只特立独行的鸟</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">106</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/kuring" title="Github地址" target="_blank">Github地址</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://weibo.com/ilvkai" title="新浪微博" target="_blank">新浪微博</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#删除subversion"><span class="nav-number">1.</span> <span class="nav-text">删除subversion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#检查openssl安装情况"><span class="nav-number">2.</span> <span class="nav-text">检查openssl安装情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装neon"><span class="nav-number">3.</span> <span class="nav-text">安装neon</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装apr"><span class="nav-number">4.</span> <span class="nav-text">安装apr</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装apr-util"><span class="nav-number">5.</span> <span class="nav-text">安装apr-util</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载sqllite"><span class="nav-number">6.</span> <span class="nav-text">下载sqllite</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装subversion"><span class="nav-number">7.</span> <span class="nav-text">安装subversion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#资料下载"><span class="nav-number">9.</span> <span class="nav-text">资料下载</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kuring Lyu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

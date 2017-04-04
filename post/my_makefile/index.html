@@ -1,0 +1,701 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="最近学习了《GNU Make项目管理》，改进了我之前一直在用的Makefile文件，解决我之前的Makefile中一直存在的修改依赖头文件后不能自动编译cpp文件的问题。本文列举了我常用的两个Makefile文件，其中第一个为我常用的Makefile，第二个为从网上找到的其他Makefile文件。 第一个Makefile123456789101112131415161718192021222324">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的Makefile文件">
+<meta property="og:url" content="http://kuring.me/post/my_makefile/index.html">
+<meta property="og:site_name" content="一只特立独行的鸟">
+<meta property="og:description" content="最近学习了《GNU Make项目管理》，改进了我之前一直在用的Makefile文件，解决我之前的Makefile中一直存在的修改依赖头文件后不能自动编译cpp文件的问题。本文列举了我常用的两个Makefile文件，其中第一个为我常用的Makefile，第二个为从网上找到的其他Makefile文件。 第一个Makefile123456789101112131415161718192021222324">
+<meta property="og:updated_time" content="2017-04-04T17:04:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我的Makefile文件">
+<meta name="twitter:description" content="最近学习了《GNU Make项目管理》，改进了我之前一直在用的Makefile文件，解决我之前的Makefile中一直存在的修改依赖头文件后不能自动编译cpp文件的问题。本文列举了我常用的两个Makefile文件，其中第一个为我常用的Makefile，第二个为从网上找到的其他Makefile文件。 第一个Makefile123456789101112131415161718192021222324">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kuring.me/post/my_makefile/"/>
+
+
+
+
+
+  <title> 我的Makefile文件 | 一只特立独行的鸟 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一只特立独行的鸟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享我的学习心得，记录我的学习笔记。趁着年轻多学点东西总是正确的~~~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://kuring.me/post/my_makefile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Kuring Lyu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一只特立独行的鸟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                我的Makefile文件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-11-23T00:00:00+08:00">
+                2014-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近学习了《GNU Make项目管理》，改进了我之前一直在用的Makefile文件，解决我之前的Makefile中一直存在的修改依赖头文件后不能自动编译cpp文件的问题。本文列举了我常用的两个Makefile文件，其中第一个为我常用的Makefile，第二个为从网上找到的其他Makefile文件。</p>
+<h1 id="第一个Makefile"><a href="#第一个Makefile" class="headerlink" title="第一个Makefile"></a>第一个Makefile</h1><figure class="highlight makefile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="section">all:</span></div><div class="line">INCLUDE = -I./</div><div class="line"></div><div class="line">FLAGS = -g -Wall <span class="variable">$(INCLUDE)</span></div><div class="line">FLAGS += -fPIC</div><div class="line"></div><div class="line">LIBDIR = -lz -lm -lcrypto</div><div class="line"></div><div class="line">LINK = <span class="variable">$(LIBDIR)</span> -lpthread</div><div class="line"></div><div class="line">GCC = g++</div><div class="line"></div><div class="line"><span class="comment"># for C++ language</span></div><div class="line">CODE.cpp = main.cpp \</div><div class="line">			trim.cpp</div><div class="line"></div><div class="line">CPP.o = $(CODE.cpp:.cpp=.o)</div><div class="line">OBJS.d = $(CODE.cpp:.cpp=.d)</div><div class="line"></div><div class="line">OBJS.o = $(CPP.o)</div><div class="line"></div><div class="line"><span class="comment"># 解决头文件依赖</span></div><div class="line">-include $(subst .cpp,.d,$(CODE.cpp))</div><div class="line"></div><div class="line">%.d: %.cpp</div><div class="line">	<span class="variable">$(GCC)</span> -M <span class="variable">$(FLAGS)</span> $&lt; &gt; $@.$$$$;		\</div><div class="line">	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' &lt; $@.$$$$ &gt; $@;	\</div><div class="line">	rm -f $@.$$$$</div><div class="line"></div><div class="line"><span class="comment"># rule for C++ language</span></div><div class="line">%.o : %.cpp	</div><div class="line">	<span class="variable">$(GCC)</span> <span class="variable">$(FLAGS)</span> -o $@ -c $&lt;	</div><div class="line">	@echo $*.o build successfully!......</div><div class="line"></div><div class="line">TARGET = main</div><div class="line">	</div><div class="line">$(TARGET) : $(OBJS.o) </div><div class="line">	<span class="variable">$(GCC)</span> <span class="variable">$(OBJS.o)</span> -o <span class="variable">$(TARGET)</span> <span class="variable">$(LINK)</span></div><div class="line">	@echo <span class="variable">$(TARGET)</span> BUILD OK!.........</div><div class="line"></div><div class="line">all : $(TARGET)</div><div class="line"></div><div class="line"><span class="meta"><span class="meta-keyword">.PHONY</span>:</span></div><div class="line"><span class="section">clean:</span></div><div class="line">	rm -rf <span class="variable">$(TARGET)</span></div><div class="line">	rm -rf <span class="variable">$(OBJS.o)</span></div><div class="line">	rm -rf <span class="variable">$(OBJS.d)</span></div><div class="line">	rm -rf *.d</div></pre></td></tr></table></figure>
+<p>该文件特点为需要手工将需要编译的源文件手动添加到Makefile中，可能比较麻烦，但是编译时比较灵活。可以随意修改需要编译源文件的顺序和是否需要编译源文件。</p>
+<h1 id="第二个Makefile"><a href="#第二个Makefile" class="headerlink" title="第二个Makefile"></a>第二个Makefile</h1><figure class="highlight makefile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line"><span class="comment">###########################################################</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># KEFILE FOR C/C++ PROJECT</span></div><div class="line"><span class="comment"># Author: swm8023 &lt;swm8023@gmail.com&gt;</span></div><div class="line"><span class="comment"># Date:   2014/01/30</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment">###########################################################</span></div><div class="line"></div><div class="line"><span class="meta"><span class="meta-keyword">.PHONY</span>: all clean</span></div><div class="line"><span class="section">all: </span></div><div class="line"></div><div class="line"><span class="comment"># annotation when release version</span></div><div class="line">DEBUG       := y</div><div class="line">TARGET_PROG := main</div><div class="line"></div><div class="line"><span class="comment"># project directory	</span></div><div class="line">DEBUG_DIR   := ./Debug</div><div class="line">RELEASE_DIR := ./Release</div><div class="line">BIN_DIR     := <span class="variable">$(if $(DEBUG)</span>, <span class="variable">$(DEBUG_DIR)</span>, <span class="variable">$(RELEASE_DIR)</span>)</div><div class="line"></div><div class="line"><span class="comment"># shell command</span></div><div class="line">CC    := gcc</div><div class="line">CXX   := g++</div><div class="line">RM    := rm -rf</div><div class="line">MKDIR := mkdir -p</div><div class="line">SED   := sed</div><div class="line">MV    := mv</div><div class="line"></div><div class="line"><span class="comment"># init sources &amp; objects &amp; depends</span></div><div class="line">sources_all := <span class="variable">$(shell find . -name "*.c" -o -name "*.cpp" -o -name "*.h")</span></div><div class="line">sources_c   := <span class="variable">$(filter %.c, $(sources_all)</span>)</div><div class="line">sources_cpp := <span class="variable">$(filter %.cpp, $(sources_all)</span>)</div><div class="line">sources_h   := <span class="variable">$(filter %.h, $(sources_all)</span>)</div><div class="line">objs        := <span class="variable">$(addprefix $(BIN_DIR)</span>/,<span class="variable">$(strip $(sources_cpp:.cpp=.o)</span> <span class="variable">$(sources_c:.c=.o)</span>))</div><div class="line">deps        := <span class="variable">$(addprefix $(BIN_DIR)</span>/,<span class="variable">$(strip $(sources_cpp:.cpp=.d)</span> <span class="variable">$(sources_c:.c=.d)</span>))</div><div class="line"></div><div class="line"><span class="comment"># create directory</span></div><div class="line">$(foreach dirname,$(sort $(dir $(sources_c) $(sources_cpp))),\</div><div class="line">  $(shell $(MKDIR) $(BIN_DIR)/$(dirname)))</div><div class="line"></div><div class="line"><span class="comment"># complie &amp; link variable</span></div><div class="line">CFLAGS     := <span class="variable">$(if $(DEBUG)</span>,-g -O, -O2)</div><div class="line">CFLAGS     += <span class="variable">$(addprefix -I ,$(sort $(dir $(sources_h)</span>)))</div><div class="line">CXXFLAGS    = <span class="variable">$(CFLAGS)</span></div><div class="line">LDFLAGS    := </div><div class="line">LOADLIBES  += #-L/usr/include/mysql</div><div class="line">LDLIBS     += #-lpthread -lmysqlclient</div><div class="line"></div><div class="line"><span class="comment"># add vpath</span></div><div class="line">vpath %.h $(sort $(dir $(sources_h)))</div><div class="line">vpath %.c $(sort $(dir $(sources_c)))</div><div class="line">vpath %.cpp $(sort $(dir $(sources_cpp)))</div><div class="line"></div><div class="line"><span class="comment"># generate depend files</span></div><div class="line"><span class="comment"># actually generate after object generated, beacasue it only used when next make)</span></div><div class="line">ifneq "$(MAKECMDGOALS)" "clean"</div><div class="line">sinclude $(deps)</div><div class="line">endif</div><div class="line"></div><div class="line"><span class="comment"># make-depend(depend-file,source-file,object-file,cc)</span></div><div class="line">define make-depend</div><div class="line">  $(RM) $1;                                     \</div><div class="line">  $4 $(CFLAGS) -MM $2 |                         \</div><div class="line">  $(SED) 's,\($(notdir $3)\): ,$3: ,' &gt; $1.tmp; \</div><div class="line">  $(SED) -e 's/<span class="comment">#.*//'                           \</span></div><div class="line">         -e 's/^[^:]*: *//'                     \</div><div class="line">         -e 's/ *\\$$//'                        \</div><div class="line">         -e '/^$$/ d'                           \</div><div class="line">         -e 's/$$/ :/' &lt; $1.tmp &gt;&gt; $1.tmp;      \</div><div class="line">  $(MV) $1.tmp $1;</div><div class="line">endef</div><div class="line"></div><div class="line"><span class="comment"># rules to generate objects file</span></div><div class="line">$(BIN_DIR)/%.o: %.c</div><div class="line">	@<span class="variable">$(call make-depend,$(patsubst %.o,%.d,$@)</span>,$&lt;,$@,<span class="variable">$(CC)</span>)</div><div class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> -o $@ -c $&lt;</div><div class="line"></div><div class="line">$(BIN_DIR)/%.o: %.cpp</div><div class="line">	@<span class="variable">$(call make-depend,$(patsubst %.o,%.d,$@)</span>,$&lt;,$@,<span class="variable">$(CXX)</span>)</div><div class="line">	<span class="variable">$(CXX)</span> <span class="variable">$(CXXFLAGS)</span> -o $@ -c $&lt;</div><div class="line"></div><div class="line"><span class="comment"># add-target(target,objs,cc)</span></div><div class="line">define add-target</div><div class="line">  REAL_TARGET += $(BIN_DIR)/$1</div><div class="line">  $(BIN_DIR)/$1: $2</div><div class="line">	$3 <span class="variable">$(LDFLAGS)</span> $$^ <span class="variable">$(LOADLIBES)</span> <span class="variable">$(LDLIBS)</span> -o $$@</div><div class="line">endef</div><div class="line"></div><div class="line"><span class="comment"># call add-target</span></div><div class="line">$(foreach targ,$(TARGET_PROG),$(eval $(call add-target,$(targ),$(objs),$(CXX))))</div><div class="line"></div><div class="line">all: $(REAL_TARGET) $(TARGET_LIBS)</div><div class="line"></div><div class="line"><span class="section">clean: </span></div><div class="line">	<span class="variable">$(RM)</span> <span class="variable">$(BIN_DIR)</span></div></pre></td></tr></table></figure>
+<p>该Makefile为从<a href="http://c4fun.cn/blog/2014/01/30/common-makefile/" target="_blank" rel="external">一个通用的C/C++ Makefile</a>中直接获得的，为了避免原博客以后不能访问的情况，这里备份一下。</p>
+<p>该Makefile可以动检测Makefile所在目录及其子目录中的.c和.cpp文件，并进行编译，不需要手动修改Makefile来填写需要编译的源文件，比较自动化。</p>
+<h1 id="相关参考"><a href="#相关参考" class="headerlink" title="相关参考"></a>相关参考</h1><p>第二个Makefile文件的作者博客中的两篇文章：<a href="http://c4fun.cn/blog/2014/01/13/gnu-make-study01/" target="_blank" rel="external">GNU Make学习总结（一）</a>和<a href="http://c4fun.cn/blog/2014/01/13/gnu-make-study02/" target="_blank" rel="external">GNU Make学习总结（二）</a></p>
+<h1 id="相关下载"><a href="#相关下载" class="headerlink" title="相关下载"></a>相关下载</h1><p><a href="http://pan.baidu.com/s/1jGDo5ls" target="_blank" rel="external">一个包含上述两个Makefile的例子</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/python_parse_web/" rel="next" title="通过python来抓取和解析网页内容">
+                <i class="fa fa-chevron-left"></i> 通过python来抓取和解析网页内容
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/programming_pearls_1/" rel="prev" title="编程珠玑读书笔记第1章开篇">
+                编程珠玑读书笔记第1章开篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Kuring Lyu" />
+          <p class="site-author-name" itemprop="name">Kuring Lyu</p>
+           
+              <p class="site-description motion-element" itemprop="description">一只特立独行的鸟</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">106</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/kuring" title="Github地址" target="_blank">Github地址</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://weibo.com/ilvkai" title="新浪微博" target="_blank">新浪微博</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一个Makefile"><span class="nav-number">1.</span> <span class="nav-text">第一个Makefile</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二个Makefile"><span class="nav-number">2.</span> <span class="nav-text">第二个Makefile</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关参考"><span class="nav-number">3.</span> <span class="nav-text">相关参考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关下载"><span class="nav-number">4.</span> <span class="nav-text">相关下载</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kuring Lyu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

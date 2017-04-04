@@ -1,0 +1,716 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前段时间参加了牛客网的答题活动，共两套试题，每套题目3个算法题，我只做了每套题的前两道。最近想查看之前做的题目的答案，却发现非常不方便，特此将我做过的4道题目记录一下，算法的思路就不再解释了。 题目一 奇数位上都是奇数或者偶数位上都是偶数 给定一个长度不小于2的数组arr。 写一个函数调整arr，使arr中要么所有的偶数位上都是偶数，要么所有的奇数位上都是奇数上。 要求：如果数组长度为N，时间复杂">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="牛客网内推笔试卷题目2015.3.12">
+<meta property="og:url" content="http://kuring.me/post/nowcoder_2015.3.12/index.html">
+<meta property="og:site_name" content="一只特立独行的鸟">
+<meta property="og:description" content="前段时间参加了牛客网的答题活动，共两套试题，每套题目3个算法题，我只做了每套题的前两道。最近想查看之前做的题目的答案，却发现非常不方便，特此将我做过的4道题目记录一下，算法的思路就不再解释了。 题目一 奇数位上都是奇数或者偶数位上都是偶数 给定一个长度不小于2的数组arr。 写一个函数调整arr，使arr中要么所有的偶数位上都是偶数，要么所有的奇数位上都是奇数上。 要求：如果数组长度为N，时间复杂">
+<meta property="og:updated_time" content="2017-04-04T16:26:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="牛客网内推笔试卷题目2015.3.12">
+<meta name="twitter:description" content="前段时间参加了牛客网的答题活动，共两套试题，每套题目3个算法题，我只做了每套题的前两道。最近想查看之前做的题目的答案，却发现非常不方便，特此将我做过的4道题目记录一下，算法的思路就不再解释了。 题目一 奇数位上都是奇数或者偶数位上都是偶数 给定一个长度不小于2的数组arr。 写一个函数调整arr，使arr中要么所有的偶数位上都是偶数，要么所有的奇数位上都是奇数上。 要求：如果数组长度为N，时间复杂">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kuring.me/post/nowcoder_2015.3.12/"/>
+
+
+
+
+
+  <title> 牛客网内推笔试卷题目2015.3.12 | 一只特立独行的鸟 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一只特立独行的鸟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享我的学习心得，记录我的学习笔记。趁着年轻多学点东西总是正确的~~~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://kuring.me/post/nowcoder_2015.3.12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Kuring Lyu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一只特立独行的鸟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                牛客网内推笔试卷题目2015.3.12
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-03-25T00:00:00+08:00">
+                2015-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前段时间参加了牛客网的答题活动，共两套试题，每套题目3个算法题，我只做了每套题的前两道。最近想查看之前做的题目的答案，却发现非常不方便，特此将我做过的4道题目记录一下，算法的思路就不再解释了。</p>
+<h1 id="题目一-奇数位上都是奇数或者偶数位上都是偶数"><a href="#题目一-奇数位上都是奇数或者偶数位上都是偶数" class="headerlink" title="题目一 奇数位上都是奇数或者偶数位上都是偶数"></a>题目一 奇数位上都是奇数或者偶数位上都是偶数</h1><blockquote>
+<p>给定一个长度不小于2的数组arr。 写一个函数调整arr，使arr中要么所有的偶数位上都是偶数，要么所有的奇数位上都是奇数上。 要求：如果数组长度为N，时间复杂度请达到O(N)，额外空间复杂度请达到O(1),下标0,2,4,6…算作偶数位,下标1,3,5,7…算作奇数位，例如[1,2,3,4]调整为[2,1,4,3]即可。</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">oddInOddEvenInEven</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; arr, <span class="keyword">int</span> len)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> odd = <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> even = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (odd &lt; len &amp;&amp; even &lt; len)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (arr[odd] % <span class="number">2</span> == <span class="number">0</span>)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">while</span> (arr[even] % <span class="number">2</span> == <span class="number">0</span>)</div><div class="line">                &#123;</div><div class="line">                    even += <span class="number">2</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (even &lt; len)</div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">int</span> tmp = arr[even];</div><div class="line">                    arr[even] = arr[odd];</div><div class="line">                    arr[odd] = tmp;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                &#123;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">                odd += <span class="number">2</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h1 id="题目二-求正数数组的最小不可组成和"><a href="#题目二-求正数数组的最小不可组成和" class="headerlink" title="题目二 求正数数组的最小不可组成和"></a>题目二 求正数数组的最小不可组成和</h1><blockquote>
+<p>给定一个全是正数的数组arr，定义一下arr的最小不可组成和的概念： 1，arr的所有非空子集中，把每个子集内的所有元素加起来会出现很多的值，其中最小的记为min，最大的记为max； 2，在区间[min,max]上，如果有一些正数不可以被arr某一个子集相加得到，那么这些正数中最小的那个，就是arr的最小不可组成和； 3，在区间[min,max]上，如果所有的数都可以被arr的某一个子集相加得到，那么max+1是arr的最小不可组成和； 举例： arr = {3,2,5} arr的min为2，max为10，在区间[2,10]上，4是不能被任何一个子集相加得到的值中最小的，所以4是arr的最小不可组成和； arr = {3,2,4} arr的min为2，max为9，在区间[2,9]上，8是不能被任何一个子集相加得到的值中最小的，所以8是arr的最小不可组成和； arr = {3,1,2} arr的min为1，max为6，在区间[2,6]上，任何数都可以被某一个子集相加得到，所以7是arr的最小不可组成和； 请写函数返回arr的最小不可组成和。</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getFirstUnFormedNum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; arr, <span class="keyword">int</span> len)</span> </span>&#123;</div><div class="line">        <span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt; res;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len; i++)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt; tmp = res;</div><div class="line">            <span class="keyword">for</span> (<span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt;::iterator iter = res.begin(); iter != res.end(); iter++)</div><div class="line">            &#123;</div><div class="line">                tmp.insert(*iter + arr[i]);</div><div class="line">            &#125;</div><div class="line">            res = tmp;</div><div class="line">            res.insert(arr[i]);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt;::iterator iter = res.begin();</div><div class="line">        <span class="keyword">int</span> before = *iter;</div><div class="line">        iter++;</div><div class="line">        <span class="keyword">for</span> (; iter != res.end(); iter++)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (*iter - before &gt; <span class="number">1</span>)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">return</span> before + <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">            before = *iter;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> before + <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h1 id="题目三-最大的LeftMax与rightMax之差绝对值"><a href="#题目三-最大的LeftMax与rightMax之差绝对值" class="headerlink" title="题目三 最大的LeftMax与rightMax之差绝对值"></a>题目三 最大的LeftMax与rightMax之差绝对值</h1><blockquote>
+<p>给定一个长度为N的整型数组arr，可以划分成左右两个部分： 左部分arr[0..K]，右部分arr[K+1..arr.length-1]，K可以取值的范围是[0,arr.length-2] 求这么多划分方案中，左部分中的最大值减去右部分最大值的绝对值，最大是多少？ 例如： [2,7,3,1,1] 当左部分为[2,7]，右部分为[3,1,1]时，左部分中的最大值减去右部分最大值的绝对值为4; 当左部分为[2,7,3]，右部分为[1,1]时，左部分中的最大值减去右部分最大值的绝对值为6; 最后返回的结果为6。 注意：如果数组的长度为N，请尽量做到时间复杂度O(N)，额外空间复杂度O(1)</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getMaxABSLeftAndRight</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec, <span class="keyword">int</span> len)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (len == <span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// find the max in array</span></div><div class="line">        <span class="keyword">int</span> max = vec[<span class="number">0</span>];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;(<span class="keyword">int</span>)vec.size(); i++)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (vec[i] &gt; max)</div><div class="line">            &#123;</div><div class="line">                max = vec[i];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// compare the head and tail in array</span></div><div class="line">        <span class="keyword">if</span> (vec[<span class="number">0</span>] &lt; vec[len - <span class="number">1</span>])</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span> max - vec[<span class="number">0</span>];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> max - vec[len - <span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h1 id="题目四-按照左右半区的方式重新组合单链表"><a href="#题目四-按照左右半区的方式重新组合单链表" class="headerlink" title="题目四 按照左右半区的方式重新组合单链表"></a>题目四 按照左右半区的方式重新组合单链表</h1><blockquote>
+<p>给定一个单链表的头部节点head，链表长度为N。 如果N为偶数，那么前N/2个节点算作左半区，后N/2个节点算作右半区； 如果N为奇数，那么前N/2个节点算作左半区，后N/2+1个节点算作右半区； 左半区从左到右依次记为L1-&gt;L2-&gt;…，右半区从左到右依次记为R1-&gt;R2-&gt;…。请将单链表调整成L1-&gt;R1-&gt;L2-&gt;R2-&gt;…的样子。 例如： 1-&gt;2-&gt;3-&gt;4 调整后：1-&gt;3-&gt;2-&gt;4 1-&gt;2-&gt;3-&gt;4-&gt;5 调整后：1-&gt;3-&gt;2-&gt;4-&gt;5 要求：如果链表长度为N，时间复杂度请达到O(N)，额外空间复杂度请达到O(1)</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Solution &#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">relocateList</span><span class="params">(<span class="keyword">struct</span> ListNode* head)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (head == <span class="literal">NULL</span> || head-&gt;next == <span class="literal">NULL</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span> ;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// use one loop, find the right head</span></div><div class="line">        ListNode *right_head = head;</div><div class="line">        ListNode *node = head;</div><div class="line">        <span class="keyword">while</span> (node != <span class="literal">NULL</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (node-&gt;next == <span class="literal">NULL</span>)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (node-&gt;next-&gt;next == <span class="literal">NULL</span>)</div><div class="line">            &#123;</div><div class="line">                right_head = right_head-&gt;next;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            right_head = right_head-&gt;next;</div><div class="line">            node = node-&gt;next-&gt;next;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        ListNode *left_node = head;</div><div class="line">        ListNode *right_node = right_head;</div><div class="line">        <span class="keyword">while</span> (left_node-&gt;next != right_head)</div><div class="line">        &#123;</div><div class="line">            ListNode *tmp = left_node-&gt;next;</div><div class="line">            left_node-&gt;next = right_node;</div><div class="line">            right_node = right_node-&gt;next;</div><div class="line">            left_node-&gt;next-&gt;next = tmp;</div><div class="line">            left_node = left_node-&gt;next-&gt;next;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        left_node-&gt;next = right_node;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/single_number/" rel="next" title="leetcode题目之Single Number">
+                <i class="fa fa-chevron-left"></i> leetcode题目之Single Number
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/majority_element/" rel="prev" title="leetcode题目之Majority Element">
+                leetcode题目之Majority Element <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Kuring Lyu" />
+          <p class="site-author-name" itemprop="name">Kuring Lyu</p>
+           
+              <p class="site-description motion-element" itemprop="description">一只特立独行的鸟</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">106</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/kuring" title="Github地址" target="_blank">Github地址</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://weibo.com/ilvkai" title="新浪微博" target="_blank">新浪微博</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目一-奇数位上都是奇数或者偶数位上都是偶数"><span class="nav-number">1.</span> <span class="nav-text">题目一 奇数位上都是奇数或者偶数位上都是偶数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目二-求正数数组的最小不可组成和"><span class="nav-number">2.</span> <span class="nav-text">题目二 求正数数组的最小不可组成和</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目三-最大的LeftMax与rightMax之差绝对值"><span class="nav-number">3.</span> <span class="nav-text">题目三 最大的LeftMax与rightMax之差绝对值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目四-按照左右半区的方式重新组合单链表"><span class="nav-number">4.</span> <span class="nav-text">题目四 按照左右半区的方式重新组合单链表</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kuring Lyu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

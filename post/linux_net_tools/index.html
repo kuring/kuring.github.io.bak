@@ -1,0 +1,718 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文对Linux常用的网络命令进行整理和总结。 连通性测试ping命令最常用的网络诊断命令。12345678[kuring@localhost ~]$ ping www.baidu.comPING www.a.shifen.com (61.135.169.125) 56(84) bytes of data.64 bytes from 61.135.169.125: icmp_seq=1 ttl=1">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux常用网络诊断工具整理">
+<meta property="og:url" content="http://kuring.me/post/linux_net_tools/index.html">
+<meta property="og:site_name" content="一只特立独行的鸟">
+<meta property="og:description" content="本文对Linux常用的网络命令进行整理和总结。 连通性测试ping命令最常用的网络诊断命令。12345678[kuring@localhost ~]$ ping www.baidu.comPING www.a.shifen.com (61.135.169.125) 56(84) bytes of data.64 bytes from 61.135.169.125: icmp_seq=1 ttl=1">
+<meta property="og:updated_time" content="2017-04-04T16:48:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux常用网络诊断工具整理">
+<meta name="twitter:description" content="本文对Linux常用的网络命令进行整理和总结。 连通性测试ping命令最常用的网络诊断命令。12345678[kuring@localhost ~]$ ping www.baidu.comPING www.a.shifen.com (61.135.169.125) 56(84) bytes of data.64 bytes from 61.135.169.125: icmp_seq=1 ttl=1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kuring.me/post/linux_net_tools/"/>
+
+
+
+
+
+  <title> Linux常用网络诊断工具整理 | 一只特立独行的鸟 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一只特立独行的鸟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享我的学习心得，记录我的学习笔记。趁着年轻多学点东西总是正确的~~~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://kuring.me/post/linux_net_tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Kuring Lyu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一只特立独行的鸟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Linux常用网络诊断工具整理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-02-08T00:00:00+08:00">
+                2014-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文对Linux常用的网络命令进行整理和总结。</p>
+<h1 id="连通性测试"><a href="#连通性测试" class="headerlink" title="连通性测试"></a>连通性测试</h1><h2 id="ping命令"><a href="#ping命令" class="headerlink" title="ping命令"></a>ping命令</h2><p>最常用的网络诊断命令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[kuring@localhost ~]$ ping www.baidu.com</div><div class="line">PING www.a.shifen.com (61.135.169.125) 56(84) bytes of data.</div><div class="line">64 bytes from 61.135.169.125: icmp_seq=1 ttl=128 time=25.5 ms</div><div class="line">64 bytes from 61.135.169.125: icmp_seq=2 ttl=128 time=20.3 ms</div><div class="line">64 bytes from 61.135.169.125: icmp_seq=3 ttl=128 time=25.0 ms</div><div class="line">64 bytes from 61.135.169.125: icmp_seq=4 ttl=128 time=21.7 ms</div><div class="line">64 bytes from 61.135.169.125: icmp_seq=5 ttl=128 time=23.4 ms</div><div class="line">64 bytes from 61.135.169.125: icmp_seq=6 ttl=128 time=21.9 ms</div></pre></td></tr></table></figure></p>
+<p>通过上述输出可以看出，ping命令可得到DNS对应的IP信息、ping的数据包大小、网络延迟信息。</p>
+<p>另外，可以通过-s参数指定ping的数据包大小。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">kuring@ubuntu:~$ ping www.baidu.com -s 1024</div><div class="line">PING www.a.shifen.com (61.135.169.125) 1024(1052) bytes of data.</div><div class="line">1032 bytes from 61.135.169.125: icmp_req=1 ttl=55 time=22.6 ms</div><div class="line">1032 bytes from 61.135.169.125: icmp_req=2 ttl=55 time=22.9 ms</div><div class="line">1032 bytes from 61.135.169.125: icmp_req=3 ttl=55 time=53.0 ms</div><div class="line">1032 bytes from 61.135.169.125: icmp_req=4 ttl=55 time=28.0 ms</div><div class="line">1032 bytes from 61.135.169.125: icmp_req=5 ttl=55 time=54.7 ms</div><div class="line">1032 bytes from 61.135.169.125: icmp_req=6 ttl=55 time=93.1 ms</div><div class="line">1032 bytes from 61.135.169.125: icmp_req=7 ttl=55 time=26.9 ms</div><div class="line">1032 bytes from 61.135.169.125: icmp_req=8 ttl=55 time=25.2 ms</div><div class="line">1032 bytes from 61.135.169.125: icmp_req=9 ttl=55 time=25.4 ms</div><div class="line">^C1032 bytes from 61.135.169.125: icmp_req=10 ttl=55 time=21.2 ms</div><div class="line"></div><div class="line">--- www.a.shifen.com ping statistics ---</div><div class="line">10 packets transmitted, 10 received, 0% packet loss, time 45436ms</div><div class="line">rtt min/avg/max/mdev = 21.225/37.350/93.149/21.966 ms</div></pre></td></tr></table></figure></p>
+<p>会发现ping命令的响应时间变长了，这正是由于ping发送数据包变大了。</p>
+<h2 id="traceroute"><a href="#traceroute" class="headerlink" title="traceroute"></a>traceroute</h2><p>可以显示路由信息。</p>
+<h2 id="mtr"><a href="#mtr" class="headerlink" title="mtr"></a>mtr</h2><p>traceroute命令的升级版，可以动态刷新路由信息，可以显示路由上每个节点的丢包率和时间等信息，信息比较全面和直观。</p>
+<h1 id="arp相关"><a href="#arp相关" class="headerlink" title="arp相关"></a>arp相关</h1><h2 id="arping"><a href="#arping" class="headerlink" title="arping"></a>arping</h2><p>可以通过该命令查看IP地址对应的mac地址。<code>arping IP地址</code>会立即发送一个arp广播，可以根据收到的arp回应的多少看局域网内是否中arp病毒、IP地址冲突等情况。</p>
+<h2 id="arp"><a href="#arp" class="headerlink" title="arp"></a>arp</h2><p>跟arp协议相关，可以设置arp表、读取arp表等。</p>
+<h1 id="端口相关"><a href="#端口相关" class="headerlink" title="端口相关"></a>端口相关</h1><h2 id="telnet"><a href="#telnet" class="headerlink" title="telnet"></a>telnet</h2><p>可以利用该命令来测试某个端口是否打开。例如执行<code>telnet localhost 881</code>其中881为本机的未打开端口，会产生如下输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Trying 127.0.0.1...</div><div class="line">telnet: connect to address 127.0.0.1: Connection refused</div></pre></td></tr></table></figure>
+<p>执行<code>telnet localhost 22</code>，其中22端口为本机的ssh服务端口且已经打开，会产生如下输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Trying 127.0.0.1...</div><div class="line">Connected to localhost.</div><div class="line">Escape character is &apos;^]&apos;.</div><div class="line">SSH-2.0-OpenSSH_5.3</div></pre></td></tr></table></figure>
+<p>则表示本机的22端口已经打开。</p>
+<h2 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h2><p>查看本机网络端口命令，常用<code>netstat -aunp</code>。</p>
+<p>#DNS相关</p>
+<h2 id="host"><a href="#host" class="headerlink" title="host"></a>host</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">kuring@ubuntu:~$ host www.google.com.hk</div><div class="line">www.google.com.hk is an alias for www-wide.l.google.com.</div><div class="line">www-wide.l.google.com has address 74.125.128.199</div><div class="line">www-wide.l.google.com has IPv6 address 2404:6800:4005:c00::c7</div></pre></td></tr></table></figure>
+<h2 id="nslookup"><a href="#nslookup" class="headerlink" title="nslookup"></a>nslookup</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">kuring@ubuntu:~$ nslookup www.google.com.hk</div><div class="line">Server:		127.0.0.1</div><div class="line">Address:	127.0.0.1#53</div><div class="line"></div><div class="line">Non-authoritative answer:</div><div class="line">www.google.com.hk	canonical name = www-wide.l.google.com.</div><div class="line">Name:	www-wide.l.google.com</div><div class="line">Address: 74.125.128.199</div></pre></td></tr></table></figure>
+<h2 id="dig"><a href="#dig" class="headerlink" title="dig"></a>dig</h2><p>可以代替nslookup的命令，显示的域名信息更为详细。</p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h1 id="ab"><a href="#ab" class="headerlink" title="ab"></a>ab</h1><p>Linux下的压力测试工具，可以模拟多个客户端发送多个请求。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">kuring@ubuntu:~$ ab -c 100 -n 100 http://kuring.me/</div><div class="line">This is ApacheBench, Version 2.3 &lt;$Revision: 655654 $&gt;</div><div class="line">Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/</div><div class="line">Licensed to The Apache Software Foundation, http://www.apache.org/</div><div class="line"></div><div class="line">Benchmarking kuring.me (be patient).....done</div><div class="line"></div><div class="line"></div><div class="line">Server Software:        Tengine/2.0.0</div><div class="line">Server Hostname:        kuring.me</div><div class="line">Server Port:            80</div><div class="line"></div><div class="line">Document Path:          /</div><div class="line">Document Length:        707 bytes</div><div class="line"></div><div class="line">Concurrency Level:      100</div><div class="line">Time taken for tests:   1.547 seconds</div><div class="line">Complete requests:      100</div><div class="line">Failed requests:        10</div><div class="line">   (Connect: 0, Receive: 0, Length: 10, Exceptions: 0)</div><div class="line">Write errors:           0</div><div class="line">Non-2xx responses:      90</div><div class="line">Total transferred:      145330 bytes</div><div class="line">HTML transferred:       126570 bytes</div><div class="line">Requests per second:    64.64 [#/sec] (mean)</div><div class="line">Time per request:       1546.990 [ms] (mean)</div><div class="line">Time per request:       15.470 [ms] (mean, across all concurrent requests)</div><div class="line">Transfer rate:          91.74 [Kbytes/sec] received</div><div class="line"></div><div class="line">Connection Times (ms)</div><div class="line">              min  mean[+/-sd] median   max</div><div class="line">Connect:      173  223  43.8    200     289</div><div class="line">Processing:   167  340 301.5    236    1368</div><div class="line">Waiting:      166  339 300.5    235    1364</div><div class="line">Total:        345  563 295.4    438    1546</div><div class="line"></div><div class="line">Percentage of the requests served within a certain time (ms)</div><div class="line">  50%    438</div><div class="line">  66%    555</div><div class="line">  75%    562</div><div class="line">  80%    597</div><div class="line">  90%   1108</div><div class="line">  95%   1474</div><div class="line">  98%   1484</div><div class="line">  99%   1546</div><div class="line"> 100%   1546 (longest request)</div></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="http://edu.51cto.com/lesson/id-12697.html" target="_blank" rel="external">解决Linux服务器访问比较慢的问题-网络测试命令讲解</a></li>
+<li>《鸟哥的Linux私房菜-服务器架设篇》</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/x_window/" rel="next" title="X Window学习">
+                <i class="fa fa-chevron-left"></i> X Window学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/cgdb/" rel="prev" title="cgdb的使用">
+                cgdb的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Kuring Lyu" />
+          <p class="site-author-name" itemprop="name">Kuring Lyu</p>
+           
+              <p class="site-description motion-element" itemprop="description">一只特立独行的鸟</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">106</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/kuring" title="Github地址" target="_blank">Github地址</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://weibo.com/ilvkai" title="新浪微博" target="_blank">新浪微博</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#连通性测试"><span class="nav-number">1.</span> <span class="nav-text">连通性测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ping命令"><span class="nav-number">1.1.</span> <span class="nav-text">ping命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#traceroute"><span class="nav-number">1.2.</span> <span class="nav-text">traceroute</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mtr"><span class="nav-number">1.3.</span> <span class="nav-text">mtr</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#arp相关"><span class="nav-number">2.</span> <span class="nav-text">arp相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#arping"><span class="nav-number">2.1.</span> <span class="nav-text">arping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#arp"><span class="nav-number">2.2.</span> <span class="nav-text">arp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#端口相关"><span class="nav-number">3.</span> <span class="nav-text">端口相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#telnet"><span class="nav-number">3.1.</span> <span class="nav-text">telnet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#netstat"><span class="nav-number">3.2.</span> <span class="nav-text">netstat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#host"><span class="nav-number">3.3.</span> <span class="nav-text">host</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nslookup"><span class="nav-number">3.4.</span> <span class="nav-text">nslookup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dig"><span class="nav-number">3.5.</span> <span class="nav-text">dig</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ab"><span class="nav-number">5.</span> <span class="nav-text">ab</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kuring Lyu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

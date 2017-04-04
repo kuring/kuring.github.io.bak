@@ -1,0 +1,756 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="vim," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文的安装环境为ubuntu13.04。为了以后便于查阅，本文将相关插件的使用放到了文章的开始部分。这里不作插件的相关介绍，相关介绍看文章底部的参考文章。 插件使用本插件快捷键会跟随下文安装内容一块同步。 ctags在源码目录执行ctags -R可生成ctags文件。该文件在源码修改后并不会改变，需要重新生成ctags文件。ctrl+]：转到函数定义处。ctrl+T：回到执行ctrl+]的地方。">
+<meta name="keywords" content="vim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim插件安装">
+<meta property="og:url" content="http://kuring.me/post/vim_plugin/index.html">
+<meta property="og:site_name" content="一只特立独行的鸟">
+<meta property="og:description" content="本文的安装环境为ubuntu13.04。为了以后便于查阅，本文将相关插件的使用放到了文章的开始部分。这里不作插件的相关介绍，相关介绍看文章底部的参考文章。 插件使用本插件快捷键会跟随下文安装内容一块同步。 ctags在源码目录执行ctags -R可生成ctags文件。该文件在源码修改后并不会改变，需要重新生成ctags文件。ctrl+]：转到函数定义处。ctrl+T：回到执行ctrl+]的地方。">
+<meta property="og:updated_time" content="2017-04-04T16:52:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vim插件安装">
+<meta name="twitter:description" content="本文的安装环境为ubuntu13.04。为了以后便于查阅，本文将相关插件的使用放到了文章的开始部分。这里不作插件的相关介绍，相关介绍看文章底部的参考文章。 插件使用本插件快捷键会跟随下文安装内容一块同步。 ctags在源码目录执行ctags -R可生成ctags文件。该文件在源码修改后并不会改变，需要重新生成ctags文件。ctrl+]：转到函数定义处。ctrl+T：回到执行ctrl+]的地方。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kuring.me/post/vim_plugin/"/>
+
+
+
+
+
+  <title> vim插件安装 | 一只特立独行的鸟 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一只特立独行的鸟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享我的学习心得，记录我的学习笔记。趁着年轻多学点东西总是正确的~~~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://kuring.me/post/vim_plugin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Kuring Lyu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一只特立独行的鸟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                vim插件安装
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-09-02T13:19:16+08:00">
+                2013-09-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文的安装环境为ubuntu13.04。为了以后便于查阅，本文将相关插件的使用放到了文章的开始部分。这里不作插件的相关介绍，相关介绍看文章底部的参考文章。</p>
+<h1 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h1><p>本插件快捷键会跟随下文安装内容一块同步。</p>
+<h2 id="ctags"><a href="#ctags" class="headerlink" title="ctags"></a>ctags</h2><p>在源码目录执行<code>ctags -R</code>可生成ctags文件。该文件在源码修改后并不会改变，需要重新生成ctags文件。<br>ctrl+]：转到函数定义处。<br>ctrl+T：回到执行<code>ctrl+]</code>的地方。</p>
+<h2 id="taglist"><a href="#taglist" class="headerlink" title="taglist"></a>taglist</h2><p><code>:TlistOpen</code>：打开taglist窗口<br><code>:TlistClose</code>：关闭taglist窗口。<br><code>:TlistToggle</code>：在打开和关闭间切换。</p>
+<h2 id="NERD-tree"><a href="#NERD-tree" class="headerlink" title="NERD tree"></a>NERD tree</h2><p><code>:NERDTree</code>：打开窗口。</p>
+<h2 id="winmanager"><a href="#winmanager" class="headerlink" title="winmanager"></a>winmanager</h2><p><code>wm</code>：打开和关闭taglist和NERD tree窗口。</p>
+<h2 id="a-vim"><a href="#a-vim" class="headerlink" title="a.vim"></a>a.vim</h2><p><code>:A</code>：在新Buffer中切换到c/h文件<br><code>:AS</code>：横向分割窗口并打开c/h文件<br><code>:AV</code>：纵向分割窗口并打开c/h文件<br><code>:AT</code>：新建一个标签页并打开c/h文件<br><code>F12</code>：代替<code>:A</code>命令</p>
+<h2 id="MiniBufExplorer"><a href="#MiniBufExplorer" class="headerlink" title="MiniBufExplorer"></a>MiniBufExplorer</h2><p><code>&lt;Tab&gt;</code>：向前循环切换到每个buffer名上<br><code>&lt;S-Tab&gt;</code>：向后循环切换到每个buffer名上<br><code>&lt;Enter&gt;</code>：在打开光标所在的buffer<br><code>d</code>：删除光标所在的buffer</p>
+<h1 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h1><h2 id="安装ctags"><a href="#安装ctags" class="headerlink" title="安装ctags"></a>安装ctags</h2><p>执行： <code>sudo apt-get install ctags</code>。</p>
+<h2 id="安装taglist"><a href="#安装taglist" class="headerlink" title="安装taglist"></a>安装taglist</h2><ol>
+<li>下载页面：<a href="http://www.vim.org/scripts/script.php?script_id=273。下载后得到taglist_46.zip文件。" target="_blank" rel="external">http://www.vim.org/scripts/script.php?script_id=273。下载后得到taglist_46.zip文件。</a></li>
+<li>执行<code>unzip taglist_46.zip</code>解压文件。</li>
+<li>将解压出的文件复制到~/.vim目录下。<code>sudo cp ~/tmp/ ~/.vim/</code>。</li>
+<li>在~/.vimrc文件中添加如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let Tlist_Show_One_File = 1            &quot;不同时显示多个文件的tag，只显示当前文件的</div><div class="line">let Tlist_Exit_OnlyWindow = 1          &quot;如果taglist窗口是最后一个窗口，则退出vim</div><div class="line">let Tlist_Use_Right_Window = 1         &quot;在右侧窗口中显示</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>参考网址：<a href="http://www.cnblogs.com/mo-beifeng/archive/2011/11/22/2259356.html" target="_blank" rel="external">http://www.cnblogs.com/mo-beifeng/archive/2011/11/22/2259356.html</a></p>
+<h2 id="安装文件浏览器NERD-tree"><a href="#安装文件浏览器NERD-tree" class="headerlink" title="安装文件浏览器NERD tree"></a>安装文件浏览器NERD tree</h2><ol>
+<li>下载页面：<a href="http://www.vim.org/scripts/script.php?script_id=1658。" target="_blank" rel="external">http://www.vim.org/scripts/script.php?script_id=1658。</a></li>
+<li>将下载后的nerdtree.zip文件解压到~/.vim目录下。 </li>
+</ol>
+<h2 id="安装winmanager"><a href="#安装winmanager" class="headerlink" title="安装winmanager"></a>安装winmanager</h2><ol>
+<li>下载页面：<a href="http://www.vim.org/scripts/script.php?script_id=95" target="_blank" rel="external">http://www.vim.org/scripts/script.php?script_id=95</a></li>
+<li>将下载后的winmanager.zip文件解压到~/.vim目录下</li>
+<li>修改.vimrc文件，添加：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let g:winManagerWindowLayout=&apos;FileExplorer|TagList&apos;</div><div class="line">nmap wm :WMToggle&lt;cr&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这样利用winmanager工具将taglist和NERD tree工具整合到了一个块，输入wm可以打开和关闭窗口。</p>
+<h2 id="安装cscope"><a href="#安装cscope" class="headerlink" title="安装cscope"></a>安装cscope</h2><ol>
+<li>下载页面：<a href="http://cscope.sourceforge.net，下载后得到文件cscope-15.8a.tar.gz。" target="_blank" rel="external">http://cscope.sourceforge.net，下载后得到文件cscope-15.8a.tar.gz。</a></li>
+<li>./configure</li>
+<li>make。可能会出现错误，执行如下命令：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">apt-get install libncurses-dev</div><div class="line">sudo apt-get install flex</div><div class="line">sudo apt-get install byacc</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然后执行<code>make clean</code>后重新make。</p>
+<ol>
+<li>sudo make install</li>
+</ol>
+<h2 id="安装在h-c文件之间切换插件a-vim"><a href="#安装在h-c文件之间切换插件a-vim" class="headerlink" title="安装在h/c文件之间切换插件a.vim"></a>安装在h/c文件之间切换插件a.vim</h2><ol>
+<li>下载页面：<a href="http://www.vim.org/scripts/script.php?script_id=31。" target="_blank" rel="external">http://www.vim.org/scripts/script.php?script_id=31。</a></li>
+<li>将下载的a.vim文件复制到~/.vim/plugin文件夹下。</li>
+<li>在~/.vimrc文件中添加<code>nnoremap &lt;silent&gt; &lt;F12&gt; :A&lt;CR&gt;</code></li>
+<li>下面内容为快捷键列表：<br>:A switches to the header file corresponding to the current file being edited (or vise versa)<br>:AS splits and switches<br>:AV vertical splits and switches<br>:AT new tab and switches<br>:AN cycles through matches<br>:IH switches to file under cursor<br>:IHS splits and switches<br>:IHV vertical splits and switches<br>:IHT new tab and switches<br>:IHN cycles through matches<br><leader>ih switches to file under cursor<br><leader>is switches to the alternate file of file under cursor (e.g. on  <foo.h> switches to foo.cpp)<br><leader>ihn cycles through matches</leader></foo.h></leader></leader></li>
+</ol>
+<h2 id="安装快速浏览和操作Buffer"><a href="#安装快速浏览和操作Buffer" class="headerlink" title="安装快速浏览和操作Buffer"></a>安装快速浏览和操作Buffer</h2><ol>
+<li>下载页面：<a href="http://www.vim.org/scripts/script.php?script_id=159" target="_blank" rel="external">http://www.vim.org/scripts/script.php?script_id=159</a></li>
+<li>将下载的 minibufexpl.vim文件丢到 ~/.vim/plugin 文件夹中即可</li>
+<li><p>在~/.vimrc文件中增加如下行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let g:miniBufExplMapCTabSwitchBufs = 1</div><div class="line">let g:miniBufExplMapWindowNavVim = 1</div><div class="line">let g:miniBufExplMapWindowNavArrows = 1</div></pre></td></tr></table></figure>
+</li>
+<li><p>快捷键：<br><tab>    向前循环切换到每个buffer名上<br><s-tab>    向后循环切换到每个buffer名上<br><enter>    在打开光标所在的buffer<br>d    删除光标所在的buffer</enter></s-tab></tab></p>
+</li>
+</ol>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><a href="http://blog.csdn.net/tge7618291/article/details/4216977" target="_blank" rel="external">经典vim插件功能说明、安装方法和使用方法介绍</a></li>
+<li><a href="http://blog.csdn.net/wooin/article/details/1858917" target="_blank" rel="external">手把手教你把Vim改装成一个IDE编程环境</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vim/" rel="tag"># vim</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/parse_http/" rel="next" title="两个通过http获取指定网页内容并解析的简单程序">
+                <i class="fa fa-chevron-left"></i> 两个通过http获取指定网页内容并解析的简单程序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/mayor_hotline/" rel="prev" title="市长热线12345">
+                市长热线12345 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Kuring Lyu" />
+          <p class="site-author-name" itemprop="name">Kuring Lyu</p>
+           
+              <p class="site-description motion-element" itemprop="description">一只特立独行的鸟</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">106</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/kuring" title="Github地址" target="_blank">Github地址</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://weibo.com/ilvkai" title="新浪微博" target="_blank">新浪微博</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#插件使用"><span class="nav-number">1.</span> <span class="nav-text">插件使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ctags"><span class="nav-number">1.1.</span> <span class="nav-text">ctags</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#taglist"><span class="nav-number">1.2.</span> <span class="nav-text">taglist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NERD-tree"><span class="nav-number">1.3.</span> <span class="nav-text">NERD tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#winmanager"><span class="nav-number">1.4.</span> <span class="nav-text">winmanager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#a-vim"><span class="nav-number">1.5.</span> <span class="nav-text">a.vim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MiniBufExplorer"><span class="nav-number">1.6.</span> <span class="nav-text">MiniBufExplorer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插件安装"><span class="nav-number">2.</span> <span class="nav-text">插件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装ctags"><span class="nav-number">2.1.</span> <span class="nav-text">安装ctags</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装taglist"><span class="nav-number">2.2.</span> <span class="nav-text">安装taglist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装文件浏览器NERD-tree"><span class="nav-number">2.3.</span> <span class="nav-text">安装文件浏览器NERD tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装winmanager"><span class="nav-number">2.4.</span> <span class="nav-text">安装winmanager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装cscope"><span class="nav-number">2.5.</span> <span class="nav-text">安装cscope</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装在h-c文件之间切换插件a-vim"><span class="nav-number">2.6.</span> <span class="nav-text">安装在h/c文件之间切换插件a.vim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装快速浏览和操作Buffer"><span class="nav-number">2.7.</span> <span class="nav-text">安装快速浏览和操作Buffer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文章"><span class="nav-number">3.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kuring Lyu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

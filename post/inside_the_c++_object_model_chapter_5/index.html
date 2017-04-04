@@ -1,0 +1,730 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="无继承情况下的对象构造在《Unix环境高级编程》的7.6节中提到C程序的内存空间可以分为正文段、初始化数据段、非初始化数据段、栈、堆。其中初始化数据段包含程序中需明确赋初值的变量，如C语言中的全局变量int maxcount = 99;。非初始化数据段又称为bss（block started by symbol）段，在程序开始之前，内核将此段初始化为0或空指针，如出现在函数外面的long sum[">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度探索C++对象模型读书笔记_第五章：构造、析构、复制语意学">
+<meta property="og:url" content="http://kuring.me/post/inside_the_c++_object_model_chapter_5/index.html">
+<meta property="og:site_name" content="一只特立独行的鸟">
+<meta property="og:description" content="无继承情况下的对象构造在《Unix环境高级编程》的7.6节中提到C程序的内存空间可以分为正文段、初始化数据段、非初始化数据段、栈、堆。其中初始化数据段包含程序中需明确赋初值的变量，如C语言中的全局变量int maxcount = 99;。非初始化数据段又称为bss（block started by symbol）段，在程序开始之前，内核将此段初始化为0或空指针，如出现在函数外面的long sum[">
+<meta property="og:image" content="http://kuring.me/ref/c++/c++_object_model/chapter5_1.PNG">
+<meta property="og:updated_time" content="2017-04-04T17:08:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度探索C++对象模型读书笔记_第五章：构造、析构、复制语意学">
+<meta name="twitter:description" content="无继承情况下的对象构造在《Unix环境高级编程》的7.6节中提到C程序的内存空间可以分为正文段、初始化数据段、非初始化数据段、栈、堆。其中初始化数据段包含程序中需明确赋初值的变量，如C语言中的全局变量int maxcount = 99;。非初始化数据段又称为bss（block started by symbol）段，在程序开始之前，内核将此段初始化为0或空指针，如出现在函数外面的long sum[">
+<meta name="twitter:image" content="http://kuring.me/ref/c++/c++_object_model/chapter5_1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kuring.me/post/inside_the_c++_object_model_chapter_5/"/>
+
+
+
+
+
+  <title> 深度探索C++对象模型读书笔记_第五章：构造、析构、复制语意学 | 一只特立独行的鸟 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一只特立独行的鸟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享我的学习心得，记录我的学习笔记。趁着年轻多学点东西总是正确的~~~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://kuring.me/post/inside_the_c++_object_model_chapter_5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Kuring Lyu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一只特立独行的鸟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                深度探索C++对象模型读书笔记_第五章：构造、析构、复制语意学
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-09-23T00:00:00+08:00">
+                2013-09-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="无继承情况下的对象构造"><a href="#无继承情况下的对象构造" class="headerlink" title="无继承情况下的对象构造"></a>无继承情况下的对象构造</h1><p>在《Unix环境高级编程》的7.6节中提到C程序的内存空间可以分为正文段、初始化数据段、非初始化数据段、栈、堆。其中初始化数据段包含程序中需明确赋初值的变量，如C语言中的全局变量<code>int maxcount = 99;</code>。非初始化数据段又称为bss（block started by symbol）段，在程序开始之前，内核将此段初始化为0或空指针，如出现在函数外面的<code>long sum[1000];</code>，该变量没有明确赋初值，因此放到了bss段中。<br>而在C++语言中，将所有的全局对象当做初始化过的数据来对待，因此不会将全局变量放到bss段中。</p>
+<h2 id="POD数据类型"><a href="#POD数据类型" class="headerlink" title="POD数据类型"></a>POD数据类型</h2><p>书中提到Plain ol’ data，查了下应该叫Plain Old Data,简称POD，指C风格的struct结构体定义的数据结构，其中struct结构体中只能定义常规数据类型，不可以含有自定义数据类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">typedef struct Point</div><div class="line">&#123;</div><div class="line">	float x, y, z;</div><div class="line">&#125; Point;</div><div class="line"></div><div class="line">Point global;</div><div class="line"></div><div class="line">Point foobar()</div><div class="line">&#123;</div><div class="line">	Point local;</div><div class="line">	Point *heap = new Point();</div><div class="line">	*heap = local;</div><div class="line">	delete heap;</div><div class="line">	return local;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>首先看全局变量global，按照常规的理解，在程序启动的时候编译器会调用Point的合成的默认构造函数来初始化global变量，在程序退出时会调用Point的合成的析构函数来销毁global变量。实际上，C++编译器会将Point看成是一个POD对象，既不会调用合成的构造函数也不会调用合成的析构函数，但C++编译器会将global当成初始化过的数据来对待，不放入BSS段。</p>
+<p>foobar函数中的local局部变量不会自动初始化，意味着local.x中的值是不可控的，但是local变量分配了栈空间。</p>
+<p><code>*heap = local;</code>执行时仅简单执行按字节复制操作，不会产生赋值操作符，因为Point是一个POD类型。</p>
+<p><code>return local;</code>同样仅通过字节复制操作产生一个临时对象。</p>
+<h2 id="抽象数据类型"><a href="#抽象数据类型" class="headerlink" title="抽象数据类型"></a>抽象数据类型</h2><p>这次将上面的Point类型从struct变换为class<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">class Point</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	Point(float x=0.0, float y=0.0, float z=0.0) : _x(x), _y(y), _z(z)&#123;&#125;</div><div class="line"></div><div class="line">private:</div><div class="line">	float _x, _y, _z;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>在上节中的foobar函数中，各个对象的默认复制构造函数、赋值操作符和析构函数仍然不会调用，因为调用是没有意义的，因此编译器干脆就不产生。</p>
+<h2 id="为继承做准备"><a href="#为继承做准备" class="headerlink" title="为继承做准备"></a>为继承做准备</h2><p>再次更改Point类，引入虚函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">class Point</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	Point(float x=0.0, float y=0.0) : _x(x), _y(y) &#123;&#125;</div><div class="line">	virtual float z();</div><div class="line">private:</div><div class="line">	float _x, _y;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>引入虚函数后，类对象就需要一个vtbl来存放虚函数的地址，类对象中需要添加vptr指针。而vptr的初始化是在对象构造的时候，因此对象初始化的时候需要调用构造函数，同时默认构造函数和赋值构造函数会自动在构造函数的最前面插入初始化vptr的代码。</p>
+<h1 id="继承体系下的对象构造"><a href="#继承体系下的对象构造" class="headerlink" title="继承体系下的对象构造"></a>继承体系下的对象构造</h1><p>C++时会自动扩充类的每一个构造函数。扩充步骤如下：</p>
+<ol>
+<li>如果类含有虚基类，则所有虚基类的构造函数被调用，调用顺序为从左到右，从最深到最浅。</li>
+<li>如果类含有基类，则基类构造函数会被调用，以基类的声明顺序为顺序。</li>
+<li>如果类对象中含有vptr，必须在初始化类的成员变量之前为vptr指定初值，使其指向vtbl。</li>
+<li>将成员初始化列表中数据成员的初始化操作放入构造函数内部，并且按照成员在类中的声明顺序。</li>
+<li>如果类成员变量不在构造函数的初始化列表中，但是成员变量含有默认构造函数，则默认构造函数必须被调用。</li>
+</ol>
+<h2 id="虚拟继承"><a href="#虚拟继承" class="headerlink" title="虚拟继承"></a>虚拟继承</h2><p>本小节将学习一下引入了虚继承机制之后构造函数的生成是什么样子的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">class Point</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	Point(float x=0.0, float y=0.0) : _x(x), _y(y) &#123;&#125;</div><div class="line">	virtual float z();</div><div class="line">private:</div><div class="line">	float _x, _y;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">class Point3d : public virtual Point</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	Point3d(float x=0.0, float y=0.0, float z=0.0)</div><div class="line">		: Point(x, y), _z(z) &#123;&#125;</div><div class="line">	~Point3d();</div><div class="line"></div><div class="line">	virtual float z() &#123;return _z;&#125;</div><div class="line">protected:</div><div class="line">	float _z;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">class Vertex : virtual public Point </div><div class="line">&#123;</div><div class="line">	// 不是重点忽略</div><div class="line">&#125;;</div><div class="line"></div><div class="line">class Vertex3d : public Point3d, public Vertex</div><div class="line">&#123;</div><div class="line">	// 不是重点忽略</div><div class="line">&#125;;</div><div class="line"></div><div class="line">class PVertex : public Vertex3d</div><div class="line">&#123;</div><div class="line">	// 不是重点忽略</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>类之间的继承关系如下图所示，已经属于最复杂的继承模型了。<br><img src="/ref/c++/c++_object_model/chapter5_1.PNG" alt="Image Title"><br>如果要构造Vertex3d的实例，在内存中必须仅能有一个Point类型的对象，而如果在Point3d和Vertex基类中都构造一个Point实例显然是不合适的。答案是编译器会在Vertex3d的构造函数中生成Point的对象，在Point3d和Vertex的构造函数中均不会生成Point的对象。Vertex3d和Point3d的构造函数伪码如下面所示，Vertex构造函数的伪码和Point3d类似，这里就不再列出。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">Point3d* Point3d::Point3d(Point3d *this, bool __most_derived, float x, float y, float z)</div><div class="line">&#123;</div><div class="line">	// 如果子类初始化基类则本构造函数不需要初始化基类</div><div class="line">	if (__most_derived != false)</div><div class="line">	&#123;</div><div class="line">		this-&gt;Point::Point(x, y);</div><div class="line">	&#125;</div><div class="line">	this-&gt;__vptr_Point3d = __vtbl_Point3d;	// 初始化指向本类的vptr</div><div class="line">	this-&gt;__vptr_Point3d_Point = __vtbl_Point3d_Point;	// 初始化指向基类的vptr</div><div class="line">	this-&gt;_z = z;</div><div class="line">	return *this;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Vertex3d* Vertex3d::Vertex3d(Vertex3d *this, bool __most_derived, float x, float y, float z)</div><div class="line">&#123;</div><div class="line">	if (__most_derived != false)</div><div class="line">	&#123;</div><div class="line">		this-&gt;Point::Point(x, y);</div><div class="line">	&#125;</div><div class="line">	this-&gt;Point3d::Point3d(false, x, y, z);</div><div class="line">	this-&gt;Vertex::Vertex(false, x, y);</div><div class="line">	// 初始化vptr</div><div class="line">	// 用户代码</div><div class="line">	return this;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>编译器在类的构造函数中增加了一个bool变量来判断本类是否需要初始化基类，虚基类的初始化始终在继承最底层的类构造函数中初始化。对于PVertex类来说，Point类的构造函数在该类的构造函数中调用。</p>
+<h2 id="vptr初始化语意学"><a href="#vptr初始化语意学" class="headerlink" title="vptr初始化语意学"></a>vptr初始化语意学</h2><p>vptr的在构造函数中的初始化时机为：在基类构造函数调用操作之后，在成员初始化列表和构造函数中显式代码之前。<br>构造函数的执行先后顺序为：</p>
+<ol>
+<li>所有虚基类、基类的构造函数会被调用。</li>
+<li>对象的vptr初始化，指向相关的vtbl。</li>
+<li>在构造函数内展开成员的初始化列表。</li>
+<li>执行显式代码。<h1 id="对象复制语意学"><a href="#对象复制语意学" class="headerlink" title="对象复制语意学"></a>对象复制语意学</h1></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/windows_linux_code/" rel="next" title="Windows和Linux之间的中文编码问题">
+                <i class="fa fa-chevron-left"></i> Windows和Linux之间的中文编码问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/my_data_bak/" rel="prev" title="我的个人数据备份方案">
+                我的个人数据备份方案 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Kuring Lyu" />
+          <p class="site-author-name" itemprop="name">Kuring Lyu</p>
+           
+              <p class="site-description motion-element" itemprop="description">一只特立独行的鸟</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">106</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/kuring" title="Github地址" target="_blank">Github地址</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://weibo.com/ilvkai" title="新浪微博" target="_blank">新浪微博</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#无继承情况下的对象构造"><span class="nav-number">1.</span> <span class="nav-text">无继承情况下的对象构造</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#POD数据类型"><span class="nav-number">1.1.</span> <span class="nav-text">POD数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象数据类型"><span class="nav-number">1.2.</span> <span class="nav-text">抽象数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为继承做准备"><span class="nav-number">1.3.</span> <span class="nav-text">为继承做准备</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#继承体系下的对象构造"><span class="nav-number">2.</span> <span class="nav-text">继承体系下的对象构造</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟继承"><span class="nav-number">2.1.</span> <span class="nav-text">虚拟继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vptr初始化语意学"><span class="nav-number">2.2.</span> <span class="nav-text">vptr初始化语意学</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象复制语意学"><span class="nav-number">3.</span> <span class="nav-text">对象复制语意学</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kuring Lyu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

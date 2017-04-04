@@ -1,0 +1,763 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Solr," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文是翻译的solrcloud的官方英文文档，本文仅将文中重点翻译，原文地址点这里。英文水平不咋地，翻译篇文章也算练练手。  SolrCloudSolrCloud是Solr的分布式集群。可以通过集群来搭建一个高可用性，容错性的Solr服务。当想搭建一个大规模，容错性，分布式索引，查询性能好的Solr服务时可以采用SolrCloud。 关于SolrCores和Collections的一点小知识在单机">
+<meta name="keywords" content="Solr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SolrCloud官方文档翻译">
+<meta property="og:url" content="http://kuring.me/post/solrcloud_translate/index.html">
+<meta property="og:site_name" content="一只特立独行的鸟">
+<meta property="og:description" content="本文是翻译的solrcloud的官方英文文档，本文仅将文中重点翻译，原文地址点这里。英文水平不咋地，翻译篇文章也算练练手。  SolrCloudSolrCloud是Solr的分布式集群。可以通过集群来搭建一个高可用性，容错性的Solr服务。当想搭建一个大规模，容错性，分布式索引，查询性能好的Solr服务时可以采用SolrCloud。 关于SolrCores和Collections的一点小知识在单机">
+<meta property="og:image" content="http://people.apache.org/~markrmiller/2shard4serverFull.jpg">
+<meta property="og:image" content="http://people.apache.org/~markrmiller/2shard2server.jpg">
+<meta property="og:image" content="http://kuring.me/ref/solr/solrcloud_1.png">
+<meta property="og:image" content="http://people.apache.org/~markrmiller/2shard4server.jpg">
+<meta property="og:image" content="http://kuring.me/ref/solr/solrcloud_2.png">
+<meta property="og:image" content="http://people.apache.org/~markrmiller/2shard4server2.jpg">
+<meta property="og:updated_time" content="2017-04-04T16:50:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SolrCloud官方文档翻译">
+<meta name="twitter:description" content="本文是翻译的solrcloud的官方英文文档，本文仅将文中重点翻译，原文地址点这里。英文水平不咋地，翻译篇文章也算练练手。  SolrCloudSolrCloud是Solr的分布式集群。可以通过集群来搭建一个高可用性，容错性的Solr服务。当想搭建一个大规模，容错性，分布式索引，查询性能好的Solr服务时可以采用SolrCloud。 关于SolrCores和Collections的一点小知识在单机">
+<meta name="twitter:image" content="http://people.apache.org/~markrmiller/2shard4serverFull.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://kuring.me/post/solrcloud_translate/"/>
+
+
+
+
+
+  <title> SolrCloud官方文档翻译 | 一只特立独行的鸟 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一只特立独行的鸟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享我的学习心得，记录我的学习笔记。趁着年轻多学点东西总是正确的~~~</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://kuring.me/post/solrcloud_translate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Kuring Lyu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一只特立独行的鸟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                SolrCloud官方文档翻译
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-07-05T16:57:14+08:00">
+                2013-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是翻译的solrcloud的官方英文文档，本文仅将文中重点翻译，原文地址点<a href="http://wiki.apache.org/solr/SolrCloud" target="_blank" rel="external">这里</a>。英文水平不咋地，翻译篇文章也算练练手。</p>
+<p><img src="http://people.apache.org/~markrmiller/2shard4serverFull.jpg" alt="Image Title"></p>
+<h1 id="SolrCloud"><a href="#SolrCloud" class="headerlink" title="SolrCloud"></a>SolrCloud</h1><p>SolrCloud是Solr的分布式集群。可以通过集群来搭建一个高可用性，容错性的Solr服务。当想搭建一个大规模，容错性，分布式索引，查询性能好的Solr服务时可以采用SolrCloud。</p>
+<h1 id="关于SolrCores和Collections的一点小知识"><a href="#关于SolrCores和Collections的一点小知识" class="headerlink" title="关于SolrCores和Collections的一点小知识"></a>关于SolrCores和Collections的一点小知识</h1><p>在单机运行时，单独的索引叫做SolrCore。如果想要创建多个索引，可以创建多个SolrCore。利用SolrCloud，一个索引可以存放在不同的Solr服务上。意味着一个单独的索引可以由不同的机器上的SolrCore组成。不同机器上的SolrCore组成了逻辑上的索引，这些SolrCore叫做collection。组成collection的SolrCore包括了数据索引和备份。</p>
+<h1 id="例子A：-简单两个shard集群"><a href="#例子A：-简单两个shard集群" class="headerlink" title="例子A： 简单两个shard集群"></a>例子A： 简单两个shard集群</h1><p><img src="http://people.apache.org/~markrmiller/2shard2server.jpg" alt="Image Title"><br>这个例子简单创建了包含两个solr服务的集群，一个collection的数据分布到两个不同的shard上。<br>因为在这个例子中我们需要两个服务器，这里仅简单的复制example的数据作为第二个服务器，复制example目录之前需要确保里面没有索引数据。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rm -r example/solr/collection1/data/*</div><div class="line">cp -r example example2</div></pre></td></tr></table></figure></p>
+<p>下面的命令会启动一个solr服务并启动一个新的solr集群。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd example</div><div class="line">java -Dbootstrap_confdir=./solr/collection1/conf -Dcollection.configName=myconf -DzkRun -DnumShards=2 -jar start.jar</div></pre></td></tr></table></figure></p>
+<ul>
+<li><code>-DzkRun</code> 参数会在solr服务中启动一个内置的zookeeper服务。</li>
+<li><code>-Dbootstrap_confdir=./solr/collection1/conf</code> 因为在zookeeper中没有solr配置信息，这一参数会将本地的<code>./solr/conf</code>目录下的配置信息上传到zookeeper中作为<code>myconf</code>配置参数。<code>myconf</code>是在下面的<code>collection.configName</code>参数中指定的。</li>
+<li><code>-Dcollection.configName=myconf</code> 为新的collection设置配置名称。如果不加这个参数配置默认名称为<code>configuration1</code>。</li>
+<li><code>-DnumShards=2</code> 划分索引到逻辑分区的个数。</li>
+</ul>
+<p>浏览<code>http://localhost(本地主机):8983/solr/#/~cloud</code>可以看到集群的状态。</p>
+<p>通过目录树可以看到配置文件已经上传到了<code>/configs/myconf/</code>目录下，一个叫collection1的collection已经创建，在collection1下是shard的列表，这些shard组成了完整的collection。</p>
+<p>接下来准备启动第二个服务器，因为没有明确的设置shard的id，该服务会自动分配到shard2。</p>
+<p>启动第二个服务，并将其指向集群。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd example2</div><div class="line">java -Djetty.port=7574 -DzkHost=localhost:9983 -jar start.jar</div></pre></td></tr></table></figure>
+<ul>
+<li><code>-Djetty.port=7574</code>来指定Jetty的端口号。</li>
+<li><code>-DzkHost=localhost:9983</code>用来指定Zookeeper集群。在本例中，在第一个Solr服务中运行了一个单独的Zookeeper服务。默认情况下，Zookeeper的端口号为Solr服务的端口号加上1000，即9983。</li>
+</ul>
+<p>通过访问<code>http://localhost(本地主机):8983/solr/#/~cloud</code>，在collection1中就可以看到shard1和shard2。</p>
+<p><img src="/ref/solr/solrcloud_1.png" alt="Image Title"></p>
+<p>下面对一些文档建立索引。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">cd exampledocs</div><div class="line"></div><div class="line">java -Durl=http://localhost:8983/solr/collection1/update -jar post.jar ipod_video.xml</div><div class="line"></div><div class="line">java -Durl=http://localhost:8983/solr/collection1/update -jar post.jar monitor.xml</div><div class="line"></div><div class="line">java -Durl=http://localhost:8983/solr/collection1/update -jar post.jar mem.xml</div></pre></td></tr></table></figure></p>
+<p>无论是向集群中的任何一台服务器请求都会得到全部的collection：<code>http://localhost:8983/solr/collection1/select?q=*:*</code>。</p>
+<p>假如想更改配置，可以在关闭所有服务之后删除<code>solr/zoo_data</code>目录下的所有内容。</p>
+<p>实际测试插入速度要比单个服务慢。</p>
+<h1 id="例子B：简单的两个shard重复的shard集群"><a href="#例子B：简单的两个shard重复的shard集群" class="headerlink" title="例子B：简单的两个shard重复的shard集群"></a>例子B：简单的两个shard重复的shard集群</h1><p><img src="http://people.apache.org/~markrmiller/2shard4server.jpg" alt="Image Title"><br>本例子会通过复制shard1和shard2来创建上一个例子。额外的shard备份可以有高可用性和容错性，简单提升索引的查询能力。</p>
+<p>首先，在运行先前的例子中我们已经有了两个shard和一些索引文档。然后简单的复制这两个服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp -r example exampleB</div><div class="line">cp -r example2 example2B</div></pre></td></tr></table></figure></p>
+<p>然后，在不同的端口上启动两个新的服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd exampleB</div><div class="line">java -Djetty.port=8900 -DzkHost=localhost:9983 -jar start.jar</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd example2B</div><div class="line">java -Djetty.port=7500 -DzkHost=localhost:9983 -jar start.jar</div></pre></td></tr></table></figure>
+<p>重新浏览网址<code>http://localhost(本地主机):8983/solr/#/~cloud</code>，检查四个solr节点是否已经都启动。<br><img src="/ref/solr/solrcloud_2.png" alt="Image Title"><br>因为我们已经告诉Solr我们需要两个逻辑上的shard，启动后的实例3和4会自动的成为原来shard的备份。</p>
+<p>向集群中的任意一个服务发起查询：<code>http://localhost:7500/solr/collection1/select?q=*:*</code>。多次发起这个查询并查看solr服务的日志。可以观察到Solr通过备份对请求做了平衡，通过不同的服务来处理请求。</p>
+<p>为了证明高可用性，在除了运行Zookeeper的服务上按下CTRL-C。（在例子C中将会讨论Zookeeper的冗余）当服务终止后，发送另外一个查询请求到其他服务，仍然能够看到所有的结果。</p>
+<p>在没一个shard至少还有一个服务时，SolrCloud仍然可以提供服务。可以通过关闭每一个实例来查看结果。假如关闭了一个shard的所有的服务，到其他服务的请求就会收到503错误。为了能够返回其他可用的shard中的文档，可以在请求中增加参数：<code>shards.tolerant=true</code>。</p>
+<p>SolrCloud用leaders和overseer来作为具体的实现。一些节点或备份将会扮演特殊的角色。不需要担心杀死了leader或overseer，假如杀死了其中的一个，集群会自动选择一个新的leader或overseer，并自动接管工作。任何的Solr实例都可以成为这种角色。</p>
+<h1 id="例子C：两个shard集群，shard带备份和zookeeper集群"><a href="#例子C：两个shard集群，shard带备份和zookeeper集群" class="headerlink" title="例子C：两个shard集群，shard带备份和zookeeper集群"></a>例子C：两个shard集群，shard带备份和zookeeper集群</h1><p><img src="http://people.apache.org/~markrmiller/2shard4server2.jpg" alt="Image Title"></p>
+<p>在例子B中问题是虽然有足够的Solr服务器可以避免集群挂掉，但是仅有一个zookeeper服务来维持集群的状态。假如zookeeper服务挂掉了，分布式的查询还是可以工作的，因为solr服务记录了zookeeper最后一次报告的状态。问题是没有新的服务器或客户端能发现集群的状态，集群的状态也不会改变。</p>
+<p>运行多个zookeeper服务可以保证zookeeper服务具有高可用性。每一个zookeeper服务需要知道集群中的其他服务，大部分服务需要提供服务。例如，一个含有三个zookeeper服务的集群允许其中一个失败剩余的两个仍然可以提供服务。五个zookeeper服务的集群可以允许一次失败两个。</p>
+<p>从产品角度考虑，推荐使用单独的zookeeper服务而不是solr服务中集成的zookeeper服务。你可以从<a href="http://zookeeper.apache.org/doc/r3.3.4/zookeeperStarted.html" target="_blank" rel="external">这里</a>读取到更多的zookeeper集群。在这个简单的例子中，我们仅简单的使用了集成的zookeeper。</p>
+<p>首先，停止四个服务，并清空zookeeper中的数据作为一个新的开始。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm -r example*/solr/zoo_data</div></pre></td></tr></table></figure></p>
+<p>我们仍然将服务分别运行在8983,7574,8900,7500端口。默认是在端口号+1000的端口上启动一个zookeeper服务，第一次运行的时候在另外三台服务器上zookeeper的地址分别为：localhost:9983,localhost:8574,localhost:9900。</p>
+<p>为了方便通过第一个服务上传solr的配置到zookeeper集群中。在第二个zookeeper服务启动之前程序会阻塞。这是因为zookeeper在工作的时候需要其他服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd example</div><div class="line"></div><div class="line">java -Dbootstrap_confdir=./solr/collection1/conf -Dcollection.configName=myconf -DzkRun -DzkHost=localhost:9983,localhost:8574,localhost:9900 -DnumShards=2 -jar start.jar</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd example2</div><div class="line">java -Djetty.port=7574 -DzkRun -DzkHost=localhost:9983,localhost:8574,localhost:9900 -jar start.jar</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd exampleB</div><div class="line">java -Djetty.port=8900 -DzkRun -DzkHost=localhost:9983,localhost:8574,localhost:9900 -jar start.jar</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd example2B</div><div class="line">java -Djetty.port=7500 -DzkHost=localhost:9983,localhost:8574,localhost:9900 -jar start.jar</div></pre></td></tr></table></figure>
+<p>现在我们运行了三个内置的zookeeper服务，如果一个服务挂掉之后其他一切正常。为了证明，在exampleB上按下<code>CTRL+C</code>杀掉服务，然后浏览<code>http://localhost:8983/solr/#/~cloud</code>来核实zookeeper服务仍然可以工作。</p>
+<p>需要注意的是，当运行在多个机器上，需要在每一台机器上设置<code>-DzkRun=hostname:port</code>属性。</p>
+<h1 id="ZooKeeper"><a href="#ZooKeeper" class="headerlink" title="ZooKeeper"></a>ZooKeeper</h1><p>多个zookeeper服务同时运行来避免错误和高可用性叫做ensemble。从产品角度，推荐运行外部的zookeeper ensemble来代替solr集成的zookeeper。浏览<a href="http://zookeeper.apache.org/" target="_blank" rel="external">zookeeper官方网站</a>下载和运行一个zookeeper ensemble。可以参考<a href="http://zookeeper.apache.org/doc/r3.3.4/zookeeperStarted.html" target="_blank" rel="external">Getting Started</a>和<a href="http://zookeeper.apache.org/doc/r3.3.4/zookeeperAdmin.html" target="_blank" rel="external">ZooKeeper Admin</a>。非常简单就可以运行。可以坚持使用solr来运行zookeeper集群，但是必须知道zookeeper集群不是非常容易动态改变的。除非solr增加对zookeeper更好的支持，重新开始是最好的改变方式。zookeeper和solr是两个不同的进程是最好的方式。</p>
+<p>当solr运行内置的zookeeper服务时，默认会使用solr服务的端口号加上1000作为zookeeper的客户端端口号。另外，默认会增加一个zookeeper的客户端端口号和两个zookeeper的选举端口号。所以在第一个例子中，solr运行在8983端口，内置的zookeeper服务运行在9983端口作为客户端端口，9984和9985作为服务端端口。</p>
+<p>当增加了更多zookeeper节点可以提高读性能，但是会稍微降低写性能。当集群状态稳定的时候，Solr用的Zookeeper非常少。下面有一些优化zookeeper的建议：</p>
+<ol>
+<li>最好的情况是zookeeper有一个专用的机器。zookeeper是一个准时的服务，专用的机器可以确保及时响应。当然专用的机器不是必须的。</li>
+<li>当把事务日志和snap-shots放到不同的磁盘上可以提高性能。</li>
+<li>假如zookeeper和solr运行在同一台机器上，利用不同的磁盘可以提高性能。</li>
+</ol>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="https://wiki.apache.org/solr/SolrCloud" target="_blank" rel="external">https://wiki.apache.org/solr/SolrCloud</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Solr/" rel="tag"># Solr</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/do_your_self/" rel="next" title="做自己">
+                <i class="fa fa-chevron-left"></i> 做自己
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/solr4.3.1_setup/" rel="prev" title="在tomcat7.0.41上搭建solr4.3.1">
+                在tomcat7.0.41上搭建solr4.3.1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Kuring Lyu" />
+          <p class="site-author-name" itemprop="name">Kuring Lyu</p>
+           
+              <p class="site-description motion-element" itemprop="description">一只特立独行的鸟</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">106</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/kuring" title="Github地址" target="_blank">Github地址</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://weibo.com/ilvkai" title="新浪微博" target="_blank">新浪微博</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SolrCloud"><span class="nav-number">1.</span> <span class="nav-text">SolrCloud</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于SolrCores和Collections的一点小知识"><span class="nav-number">2.</span> <span class="nav-text">关于SolrCores和Collections的一点小知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例子A：-简单两个shard集群"><span class="nav-number">3.</span> <span class="nav-text">例子A： 简单两个shard集群</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例子B：简单的两个shard重复的shard集群"><span class="nav-number">4.</span> <span class="nav-text">例子B：简单的两个shard重复的shard集群</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例子C：两个shard集群，shard带备份和zookeeper集群"><span class="nav-number">5.</span> <span class="nav-text">例子C：两个shard集群，shard带备份和zookeeper集群</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ZooKeeper"><span class="nav-number">6.</span> <span class="nav-text">ZooKeeper</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number">7.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kuring Lyu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
