@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[go mod使用]]></title>
+      <url>%2Fpost%2Fgo-mod%2F</url>
+      <content type="text"><![CDATA[go mod从1.11开始已经成为了go的默认包管理工具，本文记录go mod的一些使用经验。 要想使用go mod，需要将go升级到1.11或者更高版本。 在没有go mod之前，项目源码必须是放在GOPATH目录下的，有了go mod之后项目即可以放在GOPATH目录下，也可以放在非GOPATH的目录下，在GOPATH目录下在执行时需要指定环境变量GO111MODULE=on,具体的写法可以是GO111MODULE=on go mod init 由于众所周知的原因，go的包相对还是比较难下载的，很多情况下还是需要vendor目录存在的，并将vendor目录中的包一并提交到代码库中。可以使用go mod vendor命令来完成，执行该命令后会将本地下载的包copy到vendor目录下。 坑1 提示unknown revision1234# GO111MODULE=on go get gitlab.aa-inc.com/bb@v2go: finding gitlab.aa-inc.com/bb v2go: finding gitlab.aa-inc.com v2go get gitlab.aa-inc.com/bb@v2: unknown revision v2 在获取单个包的时候提示unknown revision错误，后发现是go get默认是使用的https协议，而不是git协议，而git仓库的https协议不支持导致的，解决办法为: 1git config --global url.&quot;git@gitlab.aa-inc.com:&quot;.insteadOf &quot;https://gitlab.aa-inc.com/&quot; 参考文档 Go 每日漫谈——Go Module 的一些坑]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[日常工作中经常用到的命令]]></title>
       <url>%2Fpost%2Foften-command%2F</url>
       <content type="text"><![CDATA[shell的命令千千万，工作中总有些命令是经常使用到的，本文记录一些常用到的命令，用于提高效率。 python快速开启一个http server python -m SimpleHTTPServer 8080 awk按照,打印出一每一列 awk -F, &#39;{for(i=1;i&lt;=NF;i++){print $i;}}&#39; docker registry 列出镜像：curl http://127.0.0.1:5000/v2/_catalog 查询镜像的tag: curl http://127.0.0.1:5000/v2/nginx/tags/list，如果遇到镜像名类似aa/bb的情况，需要转移一下 curl http://127.0.0.1:5000/v2/aa\/bb/tags/list]]></content>
