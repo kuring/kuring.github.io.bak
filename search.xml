@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[Linux下debug内核coredump]]></title>
+      <url>%2Fpost%2Flinux-debug-crash%2F</url>
+      <content type="text"><![CDATA[Linux内核会存在一些严重的bug，导致内核crash，会在/var/crash目录下产生类似”127.0.0.1-2019-09-30-21:33:38“这种的文件夹，里面包含了vmcore文件，该文件对于debug 内核crash的原因非常有帮助。 本文在CentOS 7下操作。 执行yum install crash来安装crash 另外还需要两个rpm包：kernel-debuginfo-3.10.0-957.el7.x86_64.rpm 和 kernel-debuginfo-common-x86_64-3.10.0-957.el7.x86_64.rpm，需要关注下操作系统的内核版本，这两个rpm包可以通过搜索引擎找到。 下到包后即可执行rpm -ivh *.rpm的方式来安装rpm包。 在机器上执行crash /usr/lib/debug/lib/modules/3.10.0-957.el7.x86_64/vmlinux /var/crash/xx/vmcore进行debug，可以输入bt命令来查看栈信息。]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[go mod使用]]></title>
       <url>%2Fpost%2Fgo-mod%2F</url>
       <content type="text"><![CDATA[go mod从1.11开始已经成为了go的默认包管理工具，本文记录go mod的一些使用经验。 要想使用go mod，需要将go升级到1.11或者更高版本。 在没有go mod之前，项目源码必须是放在GOPATH目录下的，有了go mod之后项目即可以放在GOPATH目录下，也可以放在非GOPATH的目录下，在GOPATH目录下在执行时需要指定环境变量GO111MODULE=on,具体的写法可以是GO111MODULE=on go mod init 由于众所周知的原因，go的包相对还是比较难下载的，很多情况下还是需要vendor目录存在的，并将vendor目录中的包一并提交到代码库中。可以使用go mod vendor命令来完成，执行该命令后会将本地下载的包copy到vendor目录下。 坑1 提示unknown revision1234# GO111MODULE=on go get gitlab.aa-inc.com/bb@v2go: finding gitlab.aa-inc.com/bb v2go: finding gitlab.aa-inc.com v2go get gitlab.aa-inc.com/bb@v2: unknown revision v2 在获取单个包的时候提示unknown revision错误，后发现是go get默认是使用的https协议，而不是git协议，而git仓库的https协议不支持导致的，解决办法为: 1git config --global url.&quot;git@gitlab.aa-inc.com:&quot;.insteadOf &quot;https://gitlab.aa-inc.com/&quot; 参考文档 Go 每日漫谈——Go Module 的一些坑]]></content>
