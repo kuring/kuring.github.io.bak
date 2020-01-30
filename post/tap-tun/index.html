@@ -110,24 +110,24 @@
 
 
 
-  <meta name="description" content="近段时间写了两个通过http协议来获取指定网页的内容并将内容解析出来的程序。程序一可以解析出目前本博客的内容页面的内容、时间、访问次数参数，采用Qt类库实现；程序二可以解析出新浪博客页面的内容、时间等参数，采用Linux下的tcp相关API实现。均采用C++语言实现。 程序一该程序采用Qt类库实现，其中Http协议的发送和接收采用Qt类库封装的类，网页内容的解析采用Qt封装的解析XML的相关类。该">
+  <meta name="description" content="Linux虚拟网络设备tap/tuntap/tun常用于隧道通讯，通过一个字符设备来实现用户态和内核态的通讯，字符设备一端连接着用户空间，一端连接着内核空间。 与物理网卡的最大不同是，tap/tun的数据源来自于用户态的程序，而物理网卡的数据源来自于物理链路。 对应的字符设备文件位置：  tap: /dev/tap0 tun: /dev/net/tun  当应用程序打开字符设备文件时，驱动程序会创">
 <meta property="og:type" content="article">
-<meta property="og:title" content="两个通过http获取指定网页内容并解析的简单程序">
-<meta property="og:url" content="http://kuring.me/post/parse_http/index.html">
+<meta property="og:title" content="Linux中的tap&#x2F;tun设备">
+<meta property="og:url" content="http://kuring.me/post/tap-tun/index.html">
 <meta property="og:site_name" content="伊图">
-<meta property="og:description" content="近段时间写了两个通过http协议来获取指定网页的内容并将内容解析出来的程序。程序一可以解析出目前本博客的内容页面的内容、时间、访问次数参数，采用Qt类库实现；程序二可以解析出新浪博客页面的内容、时间等参数，采用Linux下的tcp相关API实现。均采用C++语言实现。 程序一该程序采用Qt类库实现，其中Http协议的发送和接收采用Qt类库封装的类，网页内容的解析采用Qt封装的解析XML的相关类。该">
+<meta property="og:description" content="Linux虚拟网络设备tap/tuntap/tun常用于隧道通讯，通过一个字符设备来实现用户态和内核态的通讯，字符设备一端连接着用户空间，一端连接着内核空间。 与物理网卡的最大不同是，tap/tun的数据源来自于用户态的程序，而物理网卡的数据源来自于物理链路。 对应的字符设备文件位置：  tap: /dev/tap0 tun: /dev/net/tun  当应用程序打开字符设备文件时，驱动程序会创">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-06T08:01:57.236Z">
+<meta property="og:updated_time" content="2020-01-30T16:56:00.716Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="两个通过http获取指定网页内容并解析的简单程序">
-<meta name="twitter:description" content="近段时间写了两个通过http协议来获取指定网页的内容并将内容解析出来的程序。程序一可以解析出目前本博客的内容页面的内容、时间、访问次数参数，采用Qt类库实现；程序二可以解析出新浪博客页面的内容、时间等参数，采用Linux下的tcp相关API实现。均采用C++语言实现。 程序一该程序采用Qt类库实现，其中Http协议的发送和接收采用Qt类库封装的类，网页内容的解析采用Qt封装的解析XML的相关类。该">
+<meta name="twitter:title" content="Linux中的tap&#x2F;tun设备">
+<meta name="twitter:description" content="Linux虚拟网络设备tap/tuntap/tun常用于隧道通讯，通过一个字符设备来实现用户态和内核态的通讯，字符设备一端连接着用户空间，一端连接着内核空间。 与物理网卡的最大不同是，tap/tun的数据源来自于用户态的程序，而物理网卡的数据源来自于物理链路。 对应的字符设备文件位置：  tap: /dev/tap0 tun: /dev/net/tun  当应用程序打开字符设备文件时，驱动程序会创">
 
 
 
 
 
 
-  <link rel="canonical" href="http://kuring.me/post/parse_http/">
+  <link rel="canonical" href="http://kuring.me/post/tap-tun/">
 
 
 
@@ -137,7 +137,7 @@
   };
 </script>
 
-  <title>两个通过http获取指定网页内容并解析的简单程序 | 伊图</title>
+  <title>Linux中的tap/tun设备 | 伊图</title>
   
 
 
@@ -350,7 +350,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kuring.me/post/parse_http/">
+    <link itemprop="mainEntityOfPage" href="http://kuring.me/post/tap-tun/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -367,7 +367,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">两个通过http获取指定网页内容并解析的简单程序
+          <h2 class="post-title" itemprop="name headline">Linux中的tap/tun设备
               
             
           </h2>
@@ -392,24 +392,12 @@
                 
               
 
-              <time title="Created: 2013-09-02 19:03:43" itemprop="dateCreated datePublished" datetime="2013-09-02T19:03:43+08:00">2013-09-02</time>
+              <time title="Created: 2020-01-31 00:55:34 / Modified: 00:56:00" itemprop="dateCreated datePublished" datetime="2020-01-31T00:55:34+08:00">2020-01-31</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-07-06 16:01:57" itemprop="dateModified" datetime="2019-07-06T16:01:57+08:00">2019-07-06</time>
               
             
           </span>
@@ -423,8 +411,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/parse_http/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count gitment-comments-count" data-xid="/post/parse_http/" itemprop="commentsCount"></span>
+                <a href="/post/tap-tun/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count gitment-comments-count" data-xid="/post/tap-tun/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -452,11 +440,37 @@
       
 
       
-        <p>近段时间写了两个通过http协议来获取指定网页的内容并将内容解析出来的程序。程序一可以解析出目前本博客的内容页面的内容、时间、访问次数参数，采用Qt类库实现；程序二可以解析出新浪博客页面的内容、时间等参数，采用Linux下的tcp相关API实现。均采用C++语言实现。</p>
-<h1 id="程序一"><a href="#程序一" class="headerlink" title="程序一"></a>程序一</h1><p>该程序采用Qt类库实现，其中Http协议的发送和接收采用Qt类库封装的类，网页内容的解析采用Qt封装的解析XML的相关类。<br>该程序仅能解析标准的Html语言，对于网页中的所有”&lt;&gt;”标签必须有结尾才行。例如本页面源码中的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta content=&quot;black&quot; name=&quot;apple-mobile-web-app-status-bar-style&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>必须是闭合的。如果是下面这样则无法正确解析网页内容，这是由于采用的Qt类库决定的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta content=&quot;black&quot; name=&quot;apple-mobile-web-app-status-bar-style&quot;&gt;</span><br></pre></td></tr></table></figure></p>
-<h1 id="程序二"><a href="#程序二" class="headerlink" title="程序二"></a>程序二</h1><p>该程序的Http协议部分采用Linux的tcp协议api实现，解析网页直接采用搜索字符串的方式实现，较上一种方式要底层，仅能运行在Linux系统下运行。</p>
-<h1 id="相关下载"><a href="#相关下载" class="headerlink" title="相关下载"></a>相关下载</h1><p><a href="http://pan.baidu.com/share/link?shareid=1578018382&amp;uk=3506813023" target="_blank" rel="noopener">程序一和二的下载链接</a></p>
+        <h1 id="Linux虚拟网络设备tap-tun"><a href="#Linux虚拟网络设备tap-tun" class="headerlink" title="Linux虚拟网络设备tap/tun"></a>Linux虚拟网络设备tap/tun</h1><p>tap/tun常用于隧道通讯，通过一个字符设备来实现用户态和内核态的通讯，字符设备一端连接着用户空间，一端连接着内核空间。</p>
+<p>与物理网卡的最大不同是，tap/tun的数据源来自于用户态的程序，而物理网卡的数据源来自于物理链路。</p>
+<p>对应的字符设备文件位置：</p>
+<ul>
+<li>tap: /dev/tap0</li>
+<li>tun: /dev/net/tun</li>
+</ul>
+<p>当应用程序打开字符设备文件时，驱动程序会创建并注册相应的虚拟设备接口，以tunX或tapX命名。应用程序关闭设备文件时，驱动程序会删除tunX和tapX网络虚拟设备，并删除建立起来的路由信息。</p>
+<p>两个设备的不同点：</p>
+<ul>
+<li>tap是一个二层网络设备，只能处理二层的以太网帧，可以与物理网卡做桥接</li>
+<li>tun是一个点对点的三层网络设备，只能处理处理三层的IP数据包，无法与物理网卡做桥接，可以通过三层交换方式与物理网卡连通</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">                ┌──────────────┐</span><br><span class="line">                │              │</span><br><span class="line">                │     APP      │</span><br><span class="line">                │              │</span><br><span class="line">                └───────┬──────┘</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">           ┌────────────▼──────────┐</span><br><span class="line">           │                       │</span><br><span class="line">─ ─ ─ ─ ─ ─│     /dev/net/tun      ├ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─</span><br><span class="line">           │                       │</span><br><span class="line">           └────────────┬──────────┘</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                ┌───────▼──────┐                 ┌──────────────┐</span><br><span class="line">                │              │                 │              │</span><br><span class="line">                │     tunX     ├────────────────▶│Network Stack │</span><br><span class="line">                │              │                 │              │</span><br><span class="line">                └──────────────┘                 └──────────────┘</span><br></pre></td></tr></table></figure>
+<h2 id="tun设备应用举例"><a href="#tun设备应用举例" class="headerlink" title="tun设备应用举例"></a>tun设备应用举例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">          ┌──────────────┐         ┌──────────────┐</span><br><span class="line">          │              │         │              │</span><br><span class="line">          │    APP A     │         │    APP B     │◀┐</span><br><span class="line">          │              │         │              │ │</span><br><span class="line">          └───────┬──────┘         └───────┬──────┘ │</span><br><span class="line">                  │                        │        │</span><br><span class="line">                  │                        │        │</span><br><span class="line">                 1│                        │        │</span><br><span class="line">                  │                       5│        │</span><br><span class="line">                  │                        │        │</span><br><span class="line">  ─ ─ ─ ─ ─ ─ ─ ─ ┼ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─│─ ─ ─ ─ ┼ ─ ─ ─ ─ ─</span><br><span class="line">                  │                        │        │</span><br><span class="line">                  │                        │       4│</span><br><span class="line">                  │                        │        │</span><br><span class="line">     ┌────────────▼────────────────────────▼─────┐  │</span><br><span class="line">     │                                           │  │</span><br><span class="line">     │               Network Stack               │  │</span><br><span class="line">     │                                           │  │</span><br><span class="line">     └────────────┬───────────────────────┬──────┘  │</span><br><span class="line">                  │                       │         │</span><br><span class="line">                 6│                      3│         │</span><br><span class="line">                  │                       │         │</span><br><span class="line">          ┌───────▼──────┐              ┌─▼─────────┴──┐</span><br><span class="line">          │              │              │              │</span><br><span class="line">10.1.1.11 │     eth0     │              │     tun0     │ 192.168.1.11</span><br><span class="line">          │              │              │              │</span><br><span class="line">          └───────┬──────┘              └──────────────┘</span><br><span class="line">                  │</span><br><span class="line">                 7│</span><br><span class="line">                  │</span><br><span class="line">                  ▼</span><br><span class="line"></span><br><span class="line">             10.1.1.100 / 192.168.1.100</span><br></pre></td></tr></table></figure>
+<p>应用程序A要发送数据到其他物理机192.168.1.100，由于物理网络环境下只有10.1.1.11和10.1.1.100是相互连通的，192.168.1.11和192.168.1.100是不通的，为了192.168.1.11和192.168.1.100能够进行通讯，需要将数据包进行一次封装。</p>
+<p>应用程序B是通过打开字符设备文件/dev/net/tun0的方式来打开网络设备</p>
+<p>流程如下：</p>
+<ol>
+<li>A构造数据包，目的ip为192.168.1.100，并发送给协议栈</li>
+<li>协议栈根据数据包中的ip地址，匹配路由规则，要从tun0出去</li>
+<li>内核协议栈将数据包发送给tun0网络设备</li>
+<li>tun0发送应用程序B打开，于是将数据发送给应用程序B</li>
+<li>B收到数据包后，在用户态构造一个新的数据包，源IP为eth0的IP 10.1.1.11，目的IP为配置的对端10.1.1.100，并封装原来的数据包</li>
+<li>协议栈根据当前数据包的IP地址选择路由，将数据包发送给eth0</li>
+</ol>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><ul>
+<li><a href="https://www.cnblogs.com/bakari/p/10450711.html" target="_blank" rel="noopener">详解云计算网络底层技术——虚拟网络设备 tap/tun 原理解析</a></li>
+<li><a href="https://www.cnblogs.com/bakari/p/10449664.html" target="_blank" rel="noopener">Linux 网络工具详解之 ip tuntap 和 tunctl 创建 tap/tun 设备</a></li>
+<li><a href="https://segmentfault.com/a/1190000009249039" target="_blank" rel="noopener">Linux虚拟网络设备之tun/tap</a></li>
+</ul>
 
       
     </div>
@@ -492,8 +506,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/post/vim_plugin/" rel="next" title="vim插件安装">
-                <i class="fa fa-chevron-left"></i> vim插件安装
+              <a href="/post/if-promiscuous/" rel="next" title="Linux下网卡混杂模式">
+                <i class="fa fa-chevron-left"></i> Linux下网卡混杂模式
               </a>
             
           </div>
@@ -501,10 +515,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/post/linux_windows_network/" rel="prev" title="Linux和Windows平台下的网络通信问题">
-                Linux和Windows平台下的网络通信问题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -750,7 +760,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#程序一"><span class="nav-number">1.</span> <span class="nav-text">程序一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#程序二"><span class="nav-number">2.</span> <span class="nav-text">程序二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关下载"><span class="nav-number">3.</span> <span class="nav-text">相关下载</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux虚拟网络设备tap-tun"><span class="nav-number">1.</span> <span class="nav-text">Linux虚拟网络设备tap/tun</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tun设备应用举例"><span class="nav-number">1.1.</span> <span class="nav-text">tun设备应用举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">1.2.</span> <span class="nav-text">reference</span></a></li></ol></li></ol></div>
             
 
           </div>
