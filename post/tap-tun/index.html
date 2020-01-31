@@ -117,7 +117,7 @@
 <meta property="og:site_name" content="伊图">
 <meta property="og:description" content="Linux虚拟网络设备tap/tuntap/tun常用于隧道通讯，通过一个字符设备来实现用户态和内核态的通讯，字符设备一端连接着用户空间，一端连接着内核空间。 与物理网卡的最大不同是，tap/tun的数据源来自于用户态的程序，而物理网卡的数据源来自于物理链路。 对应的字符设备文件位置：  tap: /dev/tap0 tun: /dev/net/tun  当应用程序打开字符设备文件时，驱动程序会创">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-01-30T16:56:00.716Z">
+<meta property="og:updated_time" content="2020-01-31T13:28:23.287Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux中的tap&#x2F;tun设备">
 <meta name="twitter:description" content="Linux虚拟网络设备tap/tuntap/tun常用于隧道通讯，通过一个字符设备来实现用户态和内核态的通讯，字符设备一端连接着用户空间，一端连接着内核空间。 与物理网卡的最大不同是，tap/tun的数据源来自于用户态的程序，而物理网卡的数据源来自于物理链路。 对应的字符设备文件位置：  tap: /dev/tap0 tun: /dev/net/tun  当应用程序打开字符设备文件时，驱动程序会创">
@@ -392,7 +392,7 @@
                 
               
 
-              <time title="Created: 2020-01-31 00:55:34 / Modified: 00:56:00" itemprop="dateCreated datePublished" datetime="2020-01-31T00:55:34+08:00">2020-01-31</time>
+              <time title="Created: 2020-01-31 00:55:34 / Modified: 21:28:23" itemprop="dateCreated datePublished" datetime="2020-01-31T00:55:34+08:00">2020-01-31</time>
             
 
             
@@ -451,7 +451,7 @@
 <p>两个设备的不同点：</p>
 <ul>
 <li>tap是一个二层网络设备，只能处理二层的以太网帧，可以与物理网卡做桥接</li>
-<li>tun是一个点对点的三层网络设备，只能处理处理三层的IP数据包，无法与物理网卡做桥接，可以通过三层交换方式与物理网卡连通</li>
+<li>tun是一个点对点的三层网络设备，只能处理处理三层的IP数据包，无法与物理网卡做桥接，可以通过三层交换方式与物理网卡连通。Linux下的隧道协议基于该tun设备实现，如ipip、gre。</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">                ┌──────────────┐</span><br><span class="line">                │              │</span><br><span class="line">                │     APP      │</span><br><span class="line">                │              │</span><br><span class="line">                └───────┬──────┘</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">           ┌────────────▼──────────┐</span><br><span class="line">           │                       │</span><br><span class="line">─ ─ ─ ─ ─ ─│     /dev/net/tun      ├ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─</span><br><span class="line">           │                       │</span><br><span class="line">           └────────────┬──────────┘</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                        │</span><br><span class="line">                ┌───────▼──────┐                 ┌──────────────┐</span><br><span class="line">                │              │                 │              │</span><br><span class="line">                │     tunX     ├────────────────▶│Network Stack │</span><br><span class="line">                │              │                 │              │</span><br><span class="line">                └──────────────┘                 └──────────────┘</span><br></pre></td></tr></table></figure>
 <h2 id="tun设备应用举例"><a href="#tun设备应用举例" class="headerlink" title="tun设备应用举例"></a>tun设备应用举例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">          ┌──────────────┐         ┌──────────────┐</span><br><span class="line">          │              │         │              │</span><br><span class="line">          │    APP A     │         │    APP B     │◀┐</span><br><span class="line">          │              │         │              │ │</span><br><span class="line">          └───────┬──────┘         └───────┬──────┘ │</span><br><span class="line">                  │                        │        │</span><br><span class="line">                  │                        │        │</span><br><span class="line">                 1│                        │        │</span><br><span class="line">                  │                       5│        │</span><br><span class="line">                  │                        │        │</span><br><span class="line">  ─ ─ ─ ─ ─ ─ ─ ─ ┼ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─│─ ─ ─ ─ ┼ ─ ─ ─ ─ ─</span><br><span class="line">                  │                        │        │</span><br><span class="line">                  │                        │       4│</span><br><span class="line">                  │                        │        │</span><br><span class="line">     ┌────────────▼────────────────────────▼─────┐  │</span><br><span class="line">     │                                           │  │</span><br><span class="line">     │               Network Stack               │  │</span><br><span class="line">     │                                           │  │</span><br><span class="line">     └────────────┬───────────────────────┬──────┘  │</span><br><span class="line">                  │                       │         │</span><br><span class="line">                 6│                      3│         │</span><br><span class="line">                  │                       │         │</span><br><span class="line">          ┌───────▼──────┐              ┌─▼─────────┴──┐</span><br><span class="line">          │              │              │              │</span><br><span class="line">10.1.1.11 │     eth0     │              │     tun0     │ 192.168.1.11</span><br><span class="line">          │              │              │              │</span><br><span class="line">          └───────┬──────┘              └──────────────┘</span><br><span class="line">                  │</span><br><span class="line">                 7│</span><br><span class="line">                  │</span><br><span class="line">                  ▼</span><br><span class="line"></span><br><span class="line">             10.1.1.100 / 192.168.1.100</span><br></pre></td></tr></table></figure>
@@ -515,6 +515,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/post/ipip/" rel="prev" title="Linux IPIP隧道协议">
+                Linux IPIP隧道协议 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -593,7 +597,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">168</span>
+                    <span class="site-state-item-count">169</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
