@@ -110,24 +110,26 @@
 
 
 
-  <meta name="description" content="为了避免linux下的控制台程序A死掉，可以通过一个另外一个程序B来监听A程序，当A程序异常退出时将B程序带起来。当然程序设计的最好方式为程序不崩溃，但是程序中存在bug很难避免，该方法还是有一定的实践意义。对于B程序可以通过shell脚本或者单独一个应用程序来解决。本文将通过shell脚本来解决此问题。 shell脚本的内容123456789101112131415161718192021222">
+  <meta name="description" content="docker bridge是默认的网络模式 容器访问外网 默认情况下，容器即可访问外网。 启动一个容器：docker run -d nginx 容器中访问外网的请求如www.baidu.com，内核协议栈根据路由信息，会选择默认路由，将请求发送到容器中的eth0网卡，目的mac地址为网关172.17.0.1的mac地址。 12345$ route -nKernel IP routing table">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一个Linux下的监听脚本程序">
-<meta property="og:url" content="http://kuring.me/post/linux_listen_shell/index.html">
+<meta property="og:title" content="docker bridge network">
+<meta property="og:url" content="http://kuring.me/post/docker-bridge-network/index.html">
 <meta property="og:site_name" content="伊图">
-<meta property="og:description" content="为了避免linux下的控制台程序A死掉，可以通过一个另外一个程序B来监听A程序，当A程序异常退出时将B程序带起来。当然程序设计的最好方式为程序不崩溃，但是程序中存在bug很难避免，该方法还是有一定的实践意义。对于B程序可以通过shell脚本或者单独一个应用程序来解决。本文将通过shell脚本来解决此问题。 shell脚本的内容123456789101112131415161718192021222">
+<meta property="og:description" content="docker bridge是默认的网络模式 容器访问外网 默认情况下，容器即可访问外网。 启动一个容器：docker run -d nginx 容器中访问外网的请求如www.baidu.com，内核协议栈根据路由信息，会选择默认路由，将请求发送到容器中的eth0网卡，目的mac地址为网关172.17.0.1的mac地址。 12345$ route -nKernel IP routing table">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-06T08:01:57.227Z">
+<meta property="og:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/common/docker_bridge_network.png">
+<meta property="og:updated_time" content="2020-02-01T13:35:19.728Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一个Linux下的监听脚本程序">
-<meta name="twitter:description" content="为了避免linux下的控制台程序A死掉，可以通过一个另外一个程序B来监听A程序，当A程序异常退出时将B程序带起来。当然程序设计的最好方式为程序不崩溃，但是程序中存在bug很难避免，该方法还是有一定的实践意义。对于B程序可以通过shell脚本或者单独一个应用程序来解决。本文将通过shell脚本来解决此问题。 shell脚本的内容123456789101112131415161718192021222">
+<meta name="twitter:title" content="docker bridge network">
+<meta name="twitter:description" content="docker bridge是默认的网络模式 容器访问外网 默认情况下，容器即可访问外网。 启动一个容器：docker run -d nginx 容器中访问外网的请求如www.baidu.com，内核协议栈根据路由信息，会选择默认路由，将请求发送到容器中的eth0网卡，目的mac地址为网关172.17.0.1的mac地址。 12345$ route -nKernel IP routing table">
+<meta name="twitter:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/common/docker_bridge_network.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://kuring.me/post/linux_listen_shell/">
+  <link rel="canonical" href="http://kuring.me/post/docker-bridge-network/">
 
 
 
@@ -137,7 +139,7 @@
   };
 </script>
 
-  <title>一个Linux下的监听脚本程序 | 伊图</title>
+  <title>docker bridge network | 伊图</title>
   
 
 
@@ -350,7 +352,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kuring.me/post/linux_listen_shell/">
+    <link itemprop="mainEntityOfPage" href="http://kuring.me/post/docker-bridge-network/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -367,7 +369,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">一个Linux下的监听脚本程序
+          <h2 class="post-title" itemprop="name headline">docker bridge network
               
             
           </h2>
@@ -392,24 +394,12 @@
                 
               
 
-              <time title="Created: 2014-11-06 00:00:00" itemprop="dateCreated datePublished" datetime="2014-11-06T00:00:00+08:00">2014-11-06</time>
+              <time title="Created: 2020-02-01 21:34:53 / Modified: 21:35:19" itemprop="dateCreated datePublished" datetime="2020-02-01T21:34:53+08:00">2020-02-01</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-07-06 16:01:57" itemprop="dateModified" datetime="2019-07-06T16:01:57+08:00">2019-07-06</time>
               
             
           </span>
@@ -423,8 +413,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/linux_listen_shell/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count gitment-comments-count" data-xid="/post/linux_listen_shell/" itemprop="commentsCount"></span>
+                <a href="/post/docker-bridge-network/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count gitment-comments-count" data-xid="/post/docker-bridge-network/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -452,11 +442,23 @@
       
 
       
-        <p>为了避免linux下的控制台程序A死掉，可以通过一个另外一个程序B来监听A程序，当A程序异常退出时将B程序带起来。当然程序设计的最好方式为程序不崩溃，但是程序中存在bug很难避免，该方法还是有一定的实践意义。对于B程序可以通过shell脚本或者单独一个应用程序来解决。本文将通过shell脚本来解决此问题。</p>
-<h1 id="shell脚本的内容"><a href="#shell脚本的内容" class="headerlink" title="shell脚本的内容"></a>shell脚本的内容</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">check_process()</span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">	#</span><span class="bash"> check parameter</span></span><br><span class="line">	if [ $1 = "" ];</span><br><span class="line">	then</span><br><span class="line">		return -1</span><br><span class="line">	fi</span><br><span class="line"></span><br><span class="line"><span class="meta">	#</span><span class="bash"> get the running process</span></span><br><span class="line">	process_names=$(ps -ef | grep $1 | grep -v grep | awk '&#123;print $8&#125;')</span><br><span class="line">	for process_name in $process_names</span><br><span class="line">	do</span><br><span class="line">		if [ $process_name = $1 ] ;</span><br><span class="line">		then</span><br><span class="line">			return 1</span><br><span class="line">		fi</span><br><span class="line">	done</span><br><span class="line"></span><br><span class="line"><span class="meta">	#</span><span class="bash"> not run and run the process</span></span><br><span class="line">	echo "$(date) : process $1 not run, just run it"</span><br><span class="line"><span class="meta">	$</span><span class="bash">1</span></span><br><span class="line">	return 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">while [ 1 ];do</span><br><span class="line">	check_process "/usr/bin/app/process"	# programe path</span><br><span class="line">	sleep 5</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-<h1 id="将shell脚本在脱离控制台下可以运行"><a href="#将shell脚本在脱离控制台下可以运行" class="headerlink" title="将shell脚本在脱离控制台下可以运行"></a>将shell脚本在脱离控制台下可以运行</h1><p>一旦断开了控制台，shell脚本就会由于接收到SIGHUP信号而退出。这里有两种思路来解决该问题，一种是通过系统的crontab来定期调用脚本程序，另外一种是通过神奇的screen程序来解决该问题，我这里通过screen程序来解决该问题，具体screen程序的应用见我的另外一篇文章《》。</p>
-<h1 id="应用程序为daemon方式运行"><a href="#应用程序为daemon方式运行" class="headerlink" title="应用程序为daemon方式运行"></a>应用程序为daemon方式运行</h1><p>为了能够保证该脚本监控多个应用程序，需要将应用程序设置为daemon方式运行，可以调用函数daemon实现。也可以调用单独实现的daemon函数，具体代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">void init_daemon(void) </span><br><span class="line">&#123; </span><br><span class="line">    int pid; </span><br><span class="line">    int i;  </span><br><span class="line"></span><br><span class="line">    if(pid=fork()) </span><br><span class="line">        exit(0);//是父进程，结束父进程 </span><br><span class="line">    else if(pid&lt; 0)  </span><br><span class="line">        exit(1);//fork失败，退出 </span><br><span class="line">    //是第一子进程，后台继续执行 </span><br><span class="line"></span><br><span class="line">    setsid();//第一子进程成为新的会话组长和进程组长 </span><br><span class="line">    //并与控制终端分离 </span><br><span class="line">    if(pid=fork()) </span><br><span class="line">        exit(0);//是第一子进程，结束第一子进程 </span><br><span class="line">    else if(pid&lt; 0)  </span><br><span class="line">        exit(1);//fork失败，退出 </span><br><span class="line">    //是第二子进程，继续 </span><br><span class="line">    //第二子进程不再是会话组长 </span><br><span class="line"></span><br><span class="line">    for(i=0;i&lt; NOFILE;++i)//关闭打开的文件描述符 </span><br><span class="line">        close(i); </span><br><span class="line">    chdir(&quot;/tmp&quot;);//改变工作目录到/tmp </span><br><span class="line">    umask(0);//重设文件创建掩模 </span><br><span class="line">    return; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>docker bridge是默认的网络模式</p>
+<h2 id="容器访问外网"><a href="#容器访问外网" class="headerlink" title="容器访问外网"></a>容器访问外网</h2><p><img src="https://kuring.oss-cn-beijing.aliyuncs.com/common/docker_bridge_network.png" alt></p>
+<p>默认情况下，容器即可访问外网。</p>
+<p>启动一个容器：<code>docker run -d nginx</code></p>
+<p>容器中访问外网的请求如<a href="http://www.baidu.com，内核协议栈根据路由信息，会选择默认路由，将请求发送到容器中的eth0网卡，目的mac地址为网关172.17.0.1的mac地址。" target="_blank" rel="noopener">www.baidu.com，内核协议栈根据路由信息，会选择默认路由，将请求发送到容器中的eth0网卡，目的mac地址为网关172.17.0.1的mac地址。</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ route -n</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         172.17.0.1      0.0.0.0         UG    0      0        0 eth0</span><br><span class="line">172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 eth0</span><br></pre></td></tr></table></figure>
+<p>eth0网卡接收到数据包后，会将数据包转发到veth pair的另外一端，即宿主机网络中的veth6b173fd设备。</p>
+<p>veth6b173fd设备是挂在网桥上的，会将数据包转发到网桥br0，br0即为网关172.17.0.1。</p>
+<p>br0接收到数据包后，会将数据包转发给内核协议栈。</p>
+<p>宿主机上的/proc/sys/net/ipv4/ip_forward为1，表示转发功能开启，即目的ip不是本机的会根据路由规则进行转发，而不是丢弃。</p>
+<p>仅在宿主机上开启了ip_forward后，包即使转发了，还是无法回来的，因为包中的源ip地址为172.17.0.1，是私有网段的ip地址。需要做一次SNAT才可以，docker会在iptabels的nat表中的postrouting链中增加SNAT规则，下面规则的意思是源地址为172.17.0.0/16的会做一次地址伪装，即SNAT。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># iptables -nL -t nat</span><br><span class="line"></span><br><span class="line">Chain POSTROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br><span class="line">MASQUERADE  all  --  172.17.0.0/16        0.0.0.0/0</span><br></pre></td></tr></table></figure>
+<p>在eth0网卡上抓包，可以发现源ip已经是eth0的网卡ip地址。</p>
+<h2 id="端口映射"><a href="#端口映射" class="headerlink" title="端口映射"></a>端口映射</h2><p>命令格式：<code>-p ${host_port}:${container_port}</code></p>
+<p>启动一个容器：<code>docker run -d -p 8080:80 nginx</code></p>
+<p>查看本地的iptables规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$ iptables -nL -t nat</span><br><span class="line">Chain PREROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br><span class="line">DOCKER     all  --  0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type LOCAL</span><br><span class="line"></span><br><span class="line">Chain INPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br><span class="line"></span><br><span class="line">Chain OUTPUT (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br><span class="line">DOCKER     all  --  0.0.0.0/0           !127.0.0.0/8          ADDRTYPE match dst-type LOCAL</span><br><span class="line"></span><br><span class="line">Chain POSTROUTING (policy ACCEPT)</span><br><span class="line">target     prot opt source               destination</span><br><span class="line">MASQUERADE  all  --  172.17.0.0/16        0.0.0.0/0</span><br><span class="line">MASQUERADE  tcp  --  172.17.0.2           172.17.0.2           tcp dpt:80</span><br><span class="line"></span><br><span class="line">Chain DOCKER (2 references)</span><br><span class="line">target     prot opt source               destination</span><br><span class="line">RETURN     all  --  0.0.0.0/0            0.0.0.0/0</span><br><span class="line">## prerouting链引用，外面发往本机的8080端口的数据包，会dnat为172.17.0.2:80</span><br><span class="line">DNAT       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:8080 to:172.17.0.2:80</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -492,8 +494,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/post/github_fork_sync/" rel="next" title="在github上同步fork的项目">
-                <i class="fa fa-chevron-left"></i> 在github上同步fork的项目
+              <a href="/post/ipip/" rel="next" title="Linux IPIP隧道协议">
+                <i class="fa fa-chevron-left"></i> Linux IPIP隧道协议
               </a>
             
           </div>
@@ -501,10 +503,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/post/http_range/" rel="prev" title="一个实例讲解HTTP的断点续传">
-                一个实例讲解HTTP的断点续传 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -750,7 +748,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shell脚本的内容"><span class="nav-number">1.</span> <span class="nav-text">shell脚本的内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#将shell脚本在脱离控制台下可以运行"><span class="nav-number">2.</span> <span class="nav-text">将shell脚本在脱离控制台下可以运行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用程序为daemon方式运行"><span class="nav-number">3.</span> <span class="nav-text">应用程序为daemon方式运行</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#容器访问外网"><span class="nav-number">1.</span> <span class="nav-text">容器访问外网</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#端口映射"><span class="nav-number">2.</span> <span class="nav-text">端口映射</span></a></li></ol></div>
             
 
           </div>
