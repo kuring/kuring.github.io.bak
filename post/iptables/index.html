@@ -119,7 +119,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://kuring.me/images/iptables1.png">
 <meta property="og:image" content="http://kuring.me/images/iptables2.png">
-<meta property="og:updated_time" content="2020-02-06T04:10:37.610Z">
+<meta property="og:updated_time" content="2020-02-07T11:43:29.078Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iptables基本知识">
 <meta name="twitter:description" content="长期以来对iptables了解都比较浅，知道table chain rule的概念，但具体细节并不清楚，尤其是涉及到table chain之间的关联关系。 本文为iptables的学习笔记，原文见底部链接。 netfilter与iptables的关系linux在内核中对数据包过滤和修改的模块为netfilter，netfilter模块本身并不对数据包进行过滤，只是允许将过滤数据包或修改数据包的函数">
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-02-06 12:10:37" itemprop="dateModified" datetime="2020-02-06T12:10:37+08:00">2020-02-06</time>
+                <time title="Modified: 2020-02-07 19:43:29" itemprop="dateModified" datetime="2020-02-07T19:43:29+08:00">2020-02-07</time>
               
             
           </span>
@@ -491,8 +491,9 @@
 <li>drop：直接丢弃数据包，不给任何回应</li>
 <li>reject：拒绝数据包通过，并给一个响应信息，客户端会收到拒绝消息</li>
 <li>queue: 交个某个用户态进程处理</li>
-<li>snat：源地址转换</li>
 <li>dnat：目的地址转换</li>
+<li>snat：源地址转换，必须要指定SNAT地址，即–to-source参数，可以是单个ip，也可以是网段</li>
+<li>masquerade: 源地址伪装，跟snat类似，不需要指定SNAT地址，会自动从服务器上获取SNAT的ip地址</li>
 </ul>
 <h1 id="table-filter-rule的关系"><a href="#table-filter-rule的关系" class="headerlink" title="table filter rule的关系"></a>table filter rule的关系</h1><p>这三者之间的关系还是相当的绕。</p>
 <h2 id="链中的规则存在的表"><a href="#链中的规则存在的表" class="headerlink" title="链中的规则存在的表"></a>链中的规则存在的表</h2><p>chain中存放了rule，某些chain中注定不包含某些rule。例如prerouting链中的rule仅存在于nat raw mangle三张表中。</p>
