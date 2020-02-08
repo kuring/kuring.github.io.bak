@@ -119,7 +119,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://kuring.me/images/iptables1.png">
 <meta property="og:image" content="http://kuring.me/images/iptables2.png">
-<meta property="og:updated_time" content="2020-02-07T11:43:29.078Z">
+<meta property="og:updated_time" content="2020-02-07T14:35:53.100Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iptables基本知识">
 <meta name="twitter:description" content="长期以来对iptables了解都比较浅，知道table chain rule的概念，但具体细节并不清楚，尤其是涉及到table chain之间的关联关系。 本文为iptables的学习笔记，原文见底部链接。 netfilter与iptables的关系linux在内核中对数据包过滤和修改的模块为netfilter，netfilter模块本身并不对数据包进行过滤，只是允许将过滤数据包或修改数据包的函数">
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-02-07 19:43:29" itemprop="dateModified" datetime="2020-02-07T19:43:29+08:00">2020-02-07</time>
+                <time title="Modified: 2020-02-07 22:35:53" itemprop="dateModified" datetime="2020-02-07T22:35:53+08:00">2020-02-07</time>
               
             
           </span>
@@ -460,7 +460,7 @@
 <h1 id="netfilter与iptables的关系"><a href="#netfilter与iptables的关系" class="headerlink" title="netfilter与iptables的关系"></a>netfilter与iptables的关系</h1><p>linux在内核中对数据包过滤和修改的模块为netfilter，netfilter模块本身并不对数据包进行过滤，只是允许将过滤数据包或修改数据包的函数hook到内核网络协议栈的适当位置。</p>
 <p>iptables是用户态的工具，用于向netfilter中添加规则从而实现报文的过滤和修改等功能。centos7已经由filewalld来代替iptables工具。</p>
 <p>概念：tables -&gt; chains -&gt; rules</p>
-<h1 id="chain"><a href="#chain" class="headerlink" title="chain"></a>chain</h1><p>每个表都由一组内置的链，还可以添加用户自定义链。</p>
+<h1 id="chain"><a href="#chain" class="headerlink" title="chain"></a>chain</h1><p>每个表都由一组内置的链，还可以添加用户自定义链，只是用户自定义链没有钩子可以触发，需要从其他链通过<code>-j</code>即JUMP进行触发。</p>
 <ul>
 <li>INPUT 链：发往本机的报文</li>
 <li>OUTPUT 链：由本机发出的报文</li>
@@ -680,7 +680,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">170</span>
+                    <span class="site-state-item-count">171</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
