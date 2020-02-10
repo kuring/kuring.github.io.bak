@@ -110,25 +110,26 @@
 
 
 
-  <meta name="description" content="本文的安装环境为ubuntu13.04。为了以后便于查阅，本文将相关插件的使用放到了文章的开始部分。这里不作插件的相关介绍，相关介绍看文章底部的参考文章。 插件使用本插件快捷键会跟随下文安装内容一块同步。 ctags在源码目录执行ctags -R可生成ctags文件。该文件在源码修改后并不会改变，需要重新生成ctags文件。ctrl+]：转到函数定义处。ctrl+T：回到执行ctrl+]的地方。">
-<meta name="keywords" content="vim">
+  <meta name="description" content="控制器向上提供接口，用来供应用程序调用，此接口成为北向接口；控制器向下调用接口，控制网络设备，此接口成为南向接口。 OpenFlow是控制器和网络设备之间互通的南向协议，OpenvSwitch 用于创建软件的虚拟交换机。 原理 用户态进程  ovsdb：本地数据库，存储ovs的配置信息 vswitchd：ovs-ofctl用来跟该命令通讯，下发流表规则  install OpenvSwitch o">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vim插件安装">
-<meta property="og:url" content="http://kuring.me/post/vim_plugin/index.html">
+<meta property="og:title" content="ovs入门">
+<meta property="og:url" content="http://kuring.me/post/ovs/index.html">
 <meta property="og:site_name" content="伊图">
-<meta property="og:description" content="本文的安装环境为ubuntu13.04。为了以后便于查阅，本文将相关插件的使用放到了文章的开始部分。这里不作插件的相关介绍，相关介绍看文章底部的参考文章。 插件使用本插件快捷键会跟随下文安装内容一块同步。 ctags在源码目录执行ctags -R可生成ctags文件。该文件在源码修改后并不会改变，需要重新生成ctags文件。ctrl+]：转到函数定义处。ctrl+T：回到执行ctrl+]的地方。">
+<meta property="og:description" content="控制器向上提供接口，用来供应用程序调用，此接口成为北向接口；控制器向下调用接口，控制网络设备，此接口成为南向接口。 OpenFlow是控制器和网络设备之间互通的南向协议，OpenvSwitch 用于创建软件的虚拟交换机。 原理 用户态进程  ovsdb：本地数据库，存储ovs的配置信息 vswitchd：ovs-ofctl用来跟该命令通讯，下发流表规则  install OpenvSwitch o">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-06T08:01:57.242Z">
+<meta property="og:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/common/ovs.jpg">
+<meta property="og:updated_time" content="2020-02-10T15:52:57.579Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vim插件安装">
-<meta name="twitter:description" content="本文的安装环境为ubuntu13.04。为了以后便于查阅，本文将相关插件的使用放到了文章的开始部分。这里不作插件的相关介绍，相关介绍看文章底部的参考文章。 插件使用本插件快捷键会跟随下文安装内容一块同步。 ctags在源码目录执行ctags -R可生成ctags文件。该文件在源码修改后并不会改变，需要重新生成ctags文件。ctrl+]：转到函数定义处。ctrl+T：回到执行ctrl+]的地方。">
+<meta name="twitter:title" content="ovs入门">
+<meta name="twitter:description" content="控制器向上提供接口，用来供应用程序调用，此接口成为北向接口；控制器向下调用接口，控制网络设备，此接口成为南向接口。 OpenFlow是控制器和网络设备之间互通的南向协议，OpenvSwitch 用于创建软件的虚拟交换机。 原理 用户态进程  ovsdb：本地数据库，存储ovs的配置信息 vswitchd：ovs-ofctl用来跟该命令通讯，下发流表规则  install OpenvSwitch o">
+<meta name="twitter:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/common/ovs.jpg">
 
 
 
 
 
 
-  <link rel="canonical" href="http://kuring.me/post/vim_plugin/">
+  <link rel="canonical" href="http://kuring.me/post/ovs/">
 
 
 
@@ -138,7 +139,7 @@
   };
 </script>
 
-  <title>vim插件安装 | 伊图</title>
+  <title>ovs入门 | 伊图</title>
   
 
 
@@ -351,7 +352,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kuring.me/post/vim_plugin/">
+    <link itemprop="mainEntityOfPage" href="http://kuring.me/post/ovs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content>
@@ -368,7 +369,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">vim插件安装
+          <h2 class="post-title" itemprop="name headline">ovs入门
               
             
           </h2>
@@ -393,24 +394,12 @@
                 
               
 
-              <time title="Created: 2013-09-02 13:19:16" itemprop="dateCreated datePublished" datetime="2013-09-02T13:19:16+08:00">2013-09-02</time>
+              <time title="Created: 2020-02-10 23:52:22 / Modified: 23:52:57" itemprop="dateCreated datePublished" datetime="2020-02-10T23:52:22+08:00">2020-02-10</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-07-06 16:01:57" itemprop="dateModified" datetime="2019-07-06T16:01:57+08:00">2019-07-06</time>
               
             
           </span>
@@ -424,8 +413,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/vim_plugin/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count gitment-comments-count" data-xid="/post/vim_plugin/" itemprop="commentsCount"></span>
+                <a href="/post/ovs/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count gitment-comments-count" data-xid="/post/ovs/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -453,62 +442,48 @@
       
 
       
-        <p>本文的安装环境为ubuntu13.04。为了以后便于查阅，本文将相关插件的使用放到了文章的开始部分。这里不作插件的相关介绍，相关介绍看文章底部的参考文章。</p>
-<h1 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h1><p>本插件快捷键会跟随下文安装内容一块同步。</p>
-<h2 id="ctags"><a href="#ctags" class="headerlink" title="ctags"></a>ctags</h2><p>在源码目录执行<code>ctags -R</code>可生成ctags文件。该文件在源码修改后并不会改变，需要重新生成ctags文件。<br>ctrl+]：转到函数定义处。<br>ctrl+T：回到执行<code>ctrl+]</code>的地方。</p>
-<h2 id="taglist"><a href="#taglist" class="headerlink" title="taglist"></a>taglist</h2><p><code>:TlistOpen</code>：打开taglist窗口<br><code>:TlistClose</code>：关闭taglist窗口。<br><code>:TlistToggle</code>：在打开和关闭间切换。</p>
-<h2 id="NERD-tree"><a href="#NERD-tree" class="headerlink" title="NERD tree"></a>NERD tree</h2><p><code>:NERDTree</code>：打开窗口。</p>
-<h2 id="winmanager"><a href="#winmanager" class="headerlink" title="winmanager"></a>winmanager</h2><p><code>wm</code>：打开和关闭taglist和NERD tree窗口。</p>
-<h2 id="a-vim"><a href="#a-vim" class="headerlink" title="a.vim"></a>a.vim</h2><p><code>:A</code>：在新Buffer中切换到c/h文件<br><code>:AS</code>：横向分割窗口并打开c/h文件<br><code>:AV</code>：纵向分割窗口并打开c/h文件<br><code>:AT</code>：新建一个标签页并打开c/h文件<br><code>F12</code>：代替<code>:A</code>命令</p>
-<h2 id="MiniBufExplorer"><a href="#MiniBufExplorer" class="headerlink" title="MiniBufExplorer"></a>MiniBufExplorer</h2><p><code>&lt;Tab&gt;</code>：向前循环切换到每个buffer名上<br><code>&lt;S-Tab&gt;</code>：向后循环切换到每个buffer名上<br><code>&lt;Enter&gt;</code>：在打开光标所在的buffer<br><code>d</code>：删除光标所在的buffer</p>
-<h1 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h1><h2 id="安装ctags"><a href="#安装ctags" class="headerlink" title="安装ctags"></a>安装ctags</h2><p>执行： <code>sudo apt-get install ctags</code>。</p>
-<h2 id="安装taglist"><a href="#安装taglist" class="headerlink" title="安装taglist"></a>安装taglist</h2><ol>
-<li>下载页面：<a href="http://www.vim.org/scripts/script.php?script_id=273。下载后得到taglist_46.zip文件。" target="_blank" rel="noopener">http://www.vim.org/scripts/script.php?script_id=273。下载后得到taglist_46.zip文件。</a></li>
-<li>执行<code>unzip taglist_46.zip</code>解压文件。</li>
-<li>将解压出的文件复制到~/.vim目录下。<code>sudo cp ~/tmp/ ~/.vim/</code>。</li>
-<li>在~/.vimrc文件中添加如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let Tlist_Show_One_File = 1            &quot;不同时显示多个文件的tag，只显示当前文件的</span><br><span class="line">let Tlist_Exit_OnlyWindow = 1          &quot;如果taglist窗口是最后一个窗口，则退出vim</span><br><span class="line">let Tlist_Use_Right_Window = 1         &quot;在右侧窗口中显示</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>参考网址：<a href="http://www.cnblogs.com/mo-beifeng/archive/2011/11/22/2259356.html" target="_blank" rel="noopener">http://www.cnblogs.com/mo-beifeng/archive/2011/11/22/2259356.html</a></p>
-<h2 id="安装文件浏览器NERD-tree"><a href="#安装文件浏览器NERD-tree" class="headerlink" title="安装文件浏览器NERD tree"></a>安装文件浏览器NERD tree</h2><ol>
-<li>下载页面：<a href="http://www.vim.org/scripts/script.php?script_id=1658。" target="_blank" rel="noopener">http://www.vim.org/scripts/script.php?script_id=1658。</a></li>
-<li>将下载后的nerdtree.zip文件解压到~/.vim目录下。 </li>
-</ol>
-<h2 id="安装winmanager"><a href="#安装winmanager" class="headerlink" title="安装winmanager"></a>安装winmanager</h2><ol>
-<li>下载页面：<a href="http://www.vim.org/scripts/script.php?script_id=95" target="_blank" rel="noopener">http://www.vim.org/scripts/script.php?script_id=95</a></li>
-<li>将下载后的winmanager.zip文件解压到~/.vim目录下</li>
-<li>修改.vimrc文件，添加：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let g:winManagerWindowLayout=&apos;FileExplorer|TagList&apos;</span><br><span class="line">nmap wm :WMToggle&lt;cr&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>这样利用winmanager工具将taglist和NERD tree工具整合到了一个块，输入wm可以打开和关闭窗口。</p>
-<h2 id="安装cscope"><a href="#安装cscope" class="headerlink" title="安装cscope"></a>安装cscope</h2><ol>
-<li>下载页面：<a href="http://cscope.sourceforge.net，下载后得到文件cscope-15.8a.tar.gz。" target="_blank" rel="noopener">http://cscope.sourceforge.net，下载后得到文件cscope-15.8a.tar.gz。</a></li>
-<li>./configure</li>
-<li>make。可能会出现错误，执行如下命令：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt-get install libncurses-dev</span><br><span class="line">sudo apt-get install flex</span><br><span class="line">sudo apt-get install byacc</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>然后执行<code>make clean</code>后重新make。</p>
-<ol start="4">
-<li>sudo make install</li>
-</ol>
-<h2 id="安装在h-c文件之间切换插件a-vim"><a href="#安装在h-c文件之间切换插件a-vim" class="headerlink" title="安装在h/c文件之间切换插件a.vim"></a>安装在h/c文件之间切换插件a.vim</h2><ol>
-<li>下载页面：<a href="http://www.vim.org/scripts/script.php?script_id=31。" target="_blank" rel="noopener">http://www.vim.org/scripts/script.php?script_id=31。</a></li>
-<li>将下载的a.vim文件复制到~/.vim/plugin文件夹下。</li>
-<li>在~/.vimrc文件中添加<code>nnoremap &lt;silent&gt; &lt;F12&gt; :A&lt;CR&gt;</code></li>
-<li>下面内容为快捷键列表：<br>:A switches to the header file corresponding to the current file being edited (or vise versa)<br>:AS splits and switches<br>:AV vertical splits and switches<br>:AT new tab and switches<br>:AN cycles through matches<br>:IH switches to file under cursor<br>:IHS splits and switches<br>:IHV vertical splits and switches<br>:IHT new tab and switches<br>:IHN cycles through matches<br><leader>ih switches to file under cursor<br><leader>is switches to the alternate file of file under cursor (e.g. on  &lt;foo.h&gt; switches to foo.cpp)<br><leader>ihn cycles through matches</leader></leader></leader></li>
-</ol>
-<h2 id="安装快速浏览和操作Buffer"><a href="#安装快速浏览和操作Buffer" class="headerlink" title="安装快速浏览和操作Buffer"></a>安装快速浏览和操作Buffer</h2><ol>
-<li>下载页面：<a href="http://www.vim.org/scripts/script.php?script_id=159" target="_blank" rel="noopener">http://www.vim.org/scripts/script.php?script_id=159</a></li>
-<li>将下载的 minibufexpl.vim文件丢到 ~/.vim/plugin 文件夹中即可</li>
-<li><p>在~/.vimrc文件中增加如下行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let g:miniBufExplMapCTabSwitchBufs = 1</span><br><span class="line">let g:miniBufExplMapWindowNavVim = 1</span><br><span class="line">let g:miniBufExplMapWindowNavArrows = 1</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>快捷键：<br><tab>    向前循环切换到每个buffer名上<br><s-tab>    向后循环切换到每个buffer名上<br><enter>    在打开光标所在的buffer<br>d    删除光标所在的buffer</enter></s-tab></tab></p>
-</li>
-</ol>
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><a href="http://blog.csdn.net/tge7618291/article/details/4216977" target="_blank" rel="noopener">经典vim插件功能说明、安装方法和使用方法介绍</a></li>
-<li><a href="http://blog.csdn.net/wooin/article/details/1858917" target="_blank" rel="noopener">手把手教你把Vim改装成一个IDE编程环境</a></li>
+        <p>控制器向上提供接口，用来供应用程序调用，此接口成为北向接口；控制器向下调用接口，控制网络设备，此接口成为南向接口。</p>
+<p>OpenFlow是控制器和网络设备之间互通的南向协议，OpenvSwitch 用于创建软件的虚拟交换机。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p><img src="https://kuring.oss-cn-beijing.aliyuncs.com/common/ovs.jpg" alt="https://static001.geekbang.org/resource/image/d8/14/d870e5bfcad8ec45d146c3226cdccb14.jpg"></p>
+<p>用户态进程</p>
+<ul>
+<li>ovsdb：本地数据库，存储ovs的配置信息</li>
+<li>vswitchd：ovs-ofctl用来跟该命令通讯，下发流表规则</li>
+</ul>
+<h2 id="install-OpenvSwitch-on-CentOS-7"><a href="#install-OpenvSwitch-on-CentOS-7" class="headerlink" title="install OpenvSwitch on CentOS 7"></a>install OpenvSwitch on CentOS 7</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 安装依赖</span><br><span class="line">yum install openssl-devel  python-sphinx gcc make python-devel openssl-devel kernel-devel graphviz kernel-debug-devel autoconf automake rpm-build redhat-rpm-config libtool python-twisted-core python-zope-interface PyQt4 desktop-file-utils libcap-ng-devel groff checkpolicy selinux-policy-devel gcc-c++ python-six unbound unbound-devel -y</span><br><span class="line"></span><br><span class="line">mkdir -p ~/rpmbuild/SOURCES &amp;&amp; cd ~/rpmbuild/SOURCES</span><br><span class="line"># 下载ovs源码</span><br><span class="line">wget https://www.openvswitch.org/releases/openvswitch-2.12.0.tar.gz</span><br><span class="line"></span><br><span class="line">tar zvxf openvswitch-2.12.0.tar.gz</span><br><span class="line"># 构建rpm包</span><br><span class="line">rpmbuild -bb --nocheck openvswitch-2.12.0/rhel/openvswitch-fedora.spec</span><br><span class="line"></span><br><span class="line"># 安装rpm包</span><br><span class="line">yum localinstall /root/rpmbuild/RPMS/x86_64/openvswitch-2.12.0-1.el7.x86_64.rpm</span><br><span class="line"></span><br><span class="line">systemctl start openvswitch.service</span><br></pre></td></tr></table></figure>
+<p>在编译的时候有如下报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  File &quot;/usr/lib64/python2.7/site-packages/jinja2/sandbox.py&quot;, line 22, in &lt;module&gt;</span><br><span class="line">    from markupsafe import EscapeFormatter</span><br><span class="line">ImportError: cannot import name EscapeFormatter</span><br></pre></td></tr></table></figure>
+<p>是因为markupsafe的版本不对导致的，解决方法为安装合适的版本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall markupsafe</span><br><span class="line">pip install markupsafe==0.23</span><br></pre></td></tr></table></figure>
+<h2 id="vlan实验"><a href="#vlan实验" class="headerlink" title="vlan实验"></a>vlan实验</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 创建虚拟交换机ovs_br</span><br><span class="line">ovs-vsctl add-br ovs_br</span><br><span class="line">ovs-vsctl add-port ovs_br first_port</span><br></pre></td></tr></table></figure>
+<h2 id="flow-table试验-1"><a href="#flow-table试验-1" class="headerlink" title="flow table试验 1"></a>flow table试验 1</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># 创建namespace</span><br><span class="line">ip netns add ns1</span><br><span class="line">ip netns add ns2</span><br><span class="line"></span><br><span class="line"># 创建veth pair设备</span><br><span class="line">ip link add veth1 type veth peer name veth1_br</span><br><span class="line">ip link add veth2 type veth peer name veth2_br</span><br><span class="line"></span><br><span class="line"># 设置veth pair设备的namespace</span><br><span class="line">ip link set veth1 netns ns1</span><br><span class="line">ip link set veth2 netns ns2</span><br><span class="line"></span><br><span class="line"># 创建OVS网桥</span><br><span class="line">ovs-vsctl add-br ovs1</span><br><span class="line"></span><br><span class="line"># 将veth pair设备另一端绑到网桥ovs1</span><br><span class="line">ovs-vsctl add-port ovs1 veth1_br</span><br><span class="line">ovs-vsctl add-port ovs1 veth2_br</span><br><span class="line"></span><br><span class="line"># 启动veth pair</span><br><span class="line">ip netns exec ns1 ip link set veth1 up</span><br><span class="line">ip netns exec ns2 ip link set veth2 up</span><br><span class="line">ip link set veth1_br up</span><br><span class="line">ip link set veth2_br up</span><br><span class="line"></span><br><span class="line"># 设置veth1和veth2的ip地址</span><br><span class="line">ip netns exec ns1 ip addr add 192.168.1.100 dev veth1</span><br><span class="line">ip netns exec ns2 ip addr add 192.168.1.200 dev veth2</span><br><span class="line"></span><br><span class="line"># 配置路由</span><br><span class="line">ip netns exec ns1 route add -net 192.168.1.0 netmask 255.255.255.0 dev veth1</span><br><span class="line">ip netns exec ns2 route add -net 192.168.1.0 netmask 255.255.255.0 dev veth2</span><br></pre></td></tr></table></figure>
+<p>可以使用如下命令来查看刚才的操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># 可以看到刚才创建的网桥</span><br><span class="line">$ ovs-vsctl list-br</span><br><span class="line">ovs1</span><br><span class="line"></span><br><span class="line"># 查看网桥的端口</span><br><span class="line">$ ovs-vsctl list-ports ovs1</span><br><span class="line">veth1_br</span><br><span class="line">veth2_br</span><br><span class="line"></span><br><span class="line"># 查看网桥的状态</span><br><span class="line">$ ovs-vsctl show</span><br><span class="line">4ec35070-a763-4748-878a-c3784b5938a4</span><br><span class="line">    Bridge &quot;ovs1&quot;</span><br><span class="line">        Port &quot;veth1_br&quot;</span><br><span class="line">            Interface &quot;veth1_br&quot;</span><br><span class="line">        Port &quot;ovs1&quot;</span><br><span class="line">            Interface &quot;ovs1&quot;</span><br><span class="line">                type: internal</span><br><span class="line">        Port &quot;veth2_br&quot;</span><br><span class="line">            Interface &quot;veth2_br&quot;</span><br><span class="line">    ovs_version: &quot;2.12.0&quot;</span><br><span class="line"></span><br><span class="line"># 查看interface的状态，跟port是一一对应的</span><br><span class="line">$ ovs-vsctl list interface veth1_br</span><br><span class="line">...</span><br><span class="line">mac                 : []</span><br><span class="line">mac_in_use          : &quot;32:13:6b:99:91:2b&quot;</span><br><span class="line">mtu                 : 1500</span><br><span class="line">mtu_request         : []</span><br><span class="line">name                : &quot;veth1_br&quot;</span><br><span class="line">ofport              : 1 # ovs port编号</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>接下来测试一下网络的连通性是没问题的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip netns exec ns1 ping 192.168.1.200</span><br></pre></td></tr></table></figure>
+<p>查看当前流表，可以看到有一条默认的规则，该条规则用来实现交换机的基本动作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows ovs1</span><br><span class="line"> cookie=0x0, duration=1428.955s, table=0, n_packets=22, n_bytes=1676, priority=0 actions=NORMAL</span><br></pre></td></tr></table></figure>
+<p>将上述规则删除，再执行ping命令发现已经不通。说明该默认规则会将流量在端口之间进行转发。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-ofctl del-flows ovs1</span><br></pre></td></tr></table></figure>
+<p>新增加如下两条规则，用来表示将port 1的流量转发到port 3，将port 3的流量转发到port 1。其中的1和3分别为port编号，使用<code>ovs-vsctl list interface veth1_br</code>命令中的ofport可以看到。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ovs-ofctl add-flow ovs1 &quot;priority=1,in_port=1,actions=output:3&quot;</span><br><span class="line">ovs-ofctl add-flow ovs1 &quot;priority=2,in_port=3,actions=output:1&quot;</span><br><span class="line"></span><br><span class="line">$ ovs-ofctl dump-flows ovs1</span><br><span class="line"> cookie=0x0, duration=69.378s, table=0, n_packets=4, n_bytes=280, priority=1,in_port=&quot;veth1_br&quot; actions=output:&quot;veth2_br&quot;</span><br><span class="line"> cookie=0x0, duration=69.063s, table=0, n_packets=4, n_bytes=280, priority=2,in_port=&quot;veth2_br&quot; actions=output:&quot;veth1_br&quot;</span><br></pre></td></tr></table></figure>
+<p>再执行ping命令，发现可以ping通了。</p>
+<p>重新增加一条优先级更高的规则，将port 1的数据drop掉。此时再ping发现已经不通了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-ofctl add-flow ovs1 &quot;priority=3,in_port=1,actions=drop&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="多table"><a href="#多table" class="headerlink" title="多table"></a>多table</h3><p>接下来清理掉规则，并将规则重新写入到table1中，默认规则是写入到table0中的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ovs-ofctl del-flows ovs1</span><br><span class="line">ovs-ofctl add-flow ovs1 &quot;table=1,priority=1,in_port=1,actions=output:3&quot;</span><br><span class="line">ovs-ofctl add-flow ovs1 &quot;table=1,priority=2,in_port=3,actions=output:1&quot;</span><br></pre></td></tr></table></figure>
+<p>此时再执行ping命令，发现网络是不通的。因为table0中没有匹配成功，包被drop掉了。</p>
+<p>再增加如下规则，即将table 0的规则发送到table 1处理，此时可以ping通。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-ofctl add-flow ovs1 &quot;table=0,actions=goto_table=1&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="group-table"><a href="#group-table" class="headerlink" title="group table"></a>group table</h3><p>执行<code>ovs-ofctl del-flows ovs1</code>重新清理掉规则，执行下面命令查看group table内容，可以看到内容为空。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ovs-ofctl -O OpenFlow13 dump-groups ovs1</span><br><span class="line">OFPST_GROUP_DESC reply (OF1.3) (xid=0x2):</span><br></pre></td></tr></table></figure>
+<p>执行如下命令，完成数据包从table0 -&gt; group table -&gt; table1的过程，真正数据处理在table1中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 创建一个group table，其作用为将数据包发送到table 1</span><br><span class="line">ovs-ofctl add-group ovs1 &quot;group_id=1,type=select,bucket=resubmit(,1)&quot;</span><br><span class="line"></span><br><span class="line"># 将port 1和3 的数据发往group table 1</span><br><span class="line">ovs-ofctl add-flow ovs1 &quot;table=0,in_port=1,actions=group:1&quot;</span><br><span class="line">ovs-ofctl add-flow ovs1 &quot;table=0,in_port=3,actions=group:1&quot;</span><br><span class="line"></span><br><span class="line"># table 1为真正要处理数据的逻辑</span><br><span class="line">ovs-ofctl add-flow ovs1 &quot;table=1,priority=1,in_port=1,actions=output:3&quot;</span><br><span class="line">ovs-ofctl add-flow ovs1 &quot;table=1,priority=2,in_port=3,actions=output:1&quot;</span><br></pre></td></tr></table></figure>
+<p>此时再执行ping命令，发现是可以ping通的。</p>
+<h3 id="清理操作"><a href="#清理操作" class="headerlink" title="清理操作"></a>清理操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 删除网桥</span><br><span class="line">ovs-vsctl del-br ovs1</span><br><span class="line">ip link delete veth1_br</span><br><span class="line">ip link delete veth2_br</span><br><span class="line">ip netns del ns1</span><br><span class="line">ip netns del ns2</span><br></pre></td></tr></table></figure>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/63114462" target="_blank" rel="noopener">CentOS 7 安装 Open vSwitch</a></li>
+<li><a href="https://zpzhou.com/archives/ovs_flow.html" target="_blank" rel="noopener">OpenvSwitch初探 - FLOW篇</a></li>
 </ul>
 
       
@@ -536,12 +511,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/vim/" rel="tag"># vim</a>
-          
-        </div>
-      
 
       
       
@@ -551,8 +520,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/post/mayor_hotline/" rel="next" title="市长热线12345">
-                <i class="fa fa-chevron-left"></i> 市长热线12345
+              <a href="/post/kube-proxy-iptables/" rel="next" title="kube-proxy iptables规则分析">
+                <i class="fa fa-chevron-left"></i> kube-proxy iptables规则分析
               </a>
             
           </div>
@@ -560,10 +529,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/post/parse_http/" rel="prev" title="两个通过http获取指定网页内容并解析的简单程序">
-                两个通过http获取指定网页内容并解析的简单程序 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -809,7 +774,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#插件使用"><span class="nav-number">1.</span> <span class="nav-text">插件使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ctags"><span class="nav-number">1.1.</span> <span class="nav-text">ctags</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#taglist"><span class="nav-number">1.2.</span> <span class="nav-text">taglist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NERD-tree"><span class="nav-number">1.3.</span> <span class="nav-text">NERD tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#winmanager"><span class="nav-number">1.4.</span> <span class="nav-text">winmanager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#a-vim"><span class="nav-number">1.5.</span> <span class="nav-text">a.vim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MiniBufExplorer"><span class="nav-number">1.6.</span> <span class="nav-text">MiniBufExplorer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插件安装"><span class="nav-number">2.</span> <span class="nav-text">插件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装ctags"><span class="nav-number">2.1.</span> <span class="nav-text">安装ctags</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装taglist"><span class="nav-number">2.2.</span> <span class="nav-text">安装taglist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装文件浏览器NERD-tree"><span class="nav-number">2.3.</span> <span class="nav-text">安装文件浏览器NERD tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装winmanager"><span class="nav-number">2.4.</span> <span class="nav-text">安装winmanager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装cscope"><span class="nav-number">2.5.</span> <span class="nav-text">安装cscope</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装在h-c文件之间切换插件a-vim"><span class="nav-number">2.6.</span> <span class="nav-text">安装在h/c文件之间切换插件a.vim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装快速浏览和操作Buffer"><span class="nav-number">2.7.</span> <span class="nav-text">安装快速浏览和操作Buffer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文章"><span class="nav-number">3.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install-OpenvSwitch-on-CentOS-7"><span class="nav-number">2.</span> <span class="nav-text">install OpenvSwitch on CentOS 7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vlan实验"><span class="nav-number">3.</span> <span class="nav-text">vlan实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flow-table试验-1"><span class="nav-number">4.</span> <span class="nav-text">flow table试验 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多table"><span class="nav-number">4.1.</span> <span class="nav-text">多table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#group-table"><span class="nav-number">4.2.</span> <span class="nav-text">group table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清理操作"><span class="nav-number">4.3.</span> <span class="nav-text">清理操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">reference</span></a></li></ol></div>
             
 
           </div>
