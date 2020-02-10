@@ -1848,7 +1848,7 @@ slice相关以下代码有什么问题，说明原因12345678910111213141516type
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-02-10 22:38:19" itemprop="dateModified" datetime="2020-02-10T22:38:19+08:00">2020-02-10</time>
+                <time title="Modified: 2020-02-10 23:09:40" itemprop="dateModified" datetime="2020-02-10T23:09:40+08:00">2020-02-10</time>
               
             
           </span>
@@ -1883,9 +1883,10 @@ slice相关以下代码有什么问题，说明原因12345678910111213141516type
       
         
           
-          长期以来对iptables了解都比较浅，知道table chain rule的概念，但具体细节并不清楚，尤其是涉及到table chain之间的关联关系。
-本文为iptables的学习笔记，原文见底部链接。
-netfilter与iptables的关系linux在内核中对数据包过滤和修改的模块为net
+          netfilter与iptables的关系linux在内核中对数据包过滤和修改的模块为netfilter，netfilter模块本身并不对数据包进行过滤，只是允许将过滤数据包或修改数据包的函数hook到内核网络协议栈的适当位置。
+
+
+iptables是用户态的工具，用于向netfilter中添加规则
           ...
           <!--noindex-->
           <div class="post-button text-center">
