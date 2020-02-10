@@ -119,7 +119,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://kuring.me/images/iptables1.png">
 <meta property="og:image" content="http://kuring.me/images/iptables2.png">
-<meta property="og:updated_time" content="2020-02-07T14:35:53.100Z">
+<meta property="og:updated_time" content="2020-02-10T14:38:19.338Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iptables基本知识">
 <meta name="twitter:description" content="长期以来对iptables了解都比较浅，知道table chain rule的概念，但具体细节并不清楚，尤其是涉及到table chain之间的关联关系。 本文为iptables的学习笔记，原文见底部链接。 netfilter与iptables的关系linux在内核中对数据包过滤和修改的模块为netfilter，netfilter模块本身并不对数据包进行过滤，只是允许将过滤数据包或修改数据包的函数">
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-02-07 22:35:53" itemprop="dateModified" datetime="2020-02-07T22:35:53+08:00">2020-02-07</time>
+                <time title="Modified: 2020-02-10 22:38:19" itemprop="dateModified" datetime="2020-02-10T22:38:19+08:00">2020-02-10</time>
               
             
           </span>
@@ -478,7 +478,7 @@
 <p>当一个网络包进入一台机器的时候，首先拿下 MAC 头看看，是不是我的。如果是，则拿下 IP 头来。得到目标 IP 之后呢，就开始进行路由判断。在路由判断之前，这个节点我们称为 PREROUTING。如果发现 IP 是我的，包就应该是我的，就发给上面的传输层，这个节点叫作 INPUT。如果发现 IP 不是我的，就需要转发出去，这个节点称为 FORWARD。如果是我的，上层处理完毕完毕后，一般会返回一个处理结果，这个处理结果会发出去，这个节点称为 OUTPUT，无论是 FORWARD 还是 OUTPUT，都是路由判断之后发生的，最后一个节点是 POSTROUTING。</p>
 <h1 id="table"><a href="#table" class="headerlink" title="table"></a>table</h1><p>有了chain的概念后，为了便于chain中rule的管理，又引入了table的概念，用于存放相同功能的rule，不同功能的rule放到不同的table中。</p>
 <p>包括：filter nat mangle raw</p>
-<h2 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h2><p>管理本机数据包的进出，用于实现包的过滤，对应内核模块iptables_filter</p>
+<h2 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h2><p>默认表，管理本机数据包的进出，用于实现包的过滤，对应内核模块iptables_filter</p>
 <p>input：想要进入linux主机的包<br>output：linux主机要发送的包<br>forward：传递包到后端计算机，与nat table关联较多</p>
 <h2 id="nat"><a href="#nat" class="headerlink" title="nat"></a>nat</h2><p>管理后端主机进出，与linux主机没有关系，与linux后的主机有关</p>
 <p>prerouting：进行路由判断之前的规则(dnat/redirect)<br>postrouting：路由判断之后执行的规则(snat/masquerade)<br>output：与发出去的包有关</p>
@@ -493,7 +493,7 @@
 <li>queue: 交个某个用户态进程处理</li>
 <li>dnat：目的地址转换</li>
 <li>snat：源地址转换，必须要指定SNAT地址，即–to-source参数，可以是单个ip，也可以是网段</li>
-<li>masquerade: 源地址伪装，跟snat类似，不需要指定SNAT地址，会自动从服务器上获取SNAT的ip地址</li>
+<li>masquerade: 源地址伪装，跟snat类似，不需要指定SNAT地址，会自动从服务器上获取SNAT的ip地址。如果有多个网卡的情况下，会使用路由选择算法。</li>
 </ul>
 <h1 id="table-filter-rule的关系"><a href="#table-filter-rule的关系" class="headerlink" title="table filter rule的关系"></a>table filter rule的关系</h1><p>这三者之间的关系还是相当的绕。</p>
 <h2 id="链中的规则存在的表"><a href="#链中的规则存在的表" class="headerlink" title="链中的规则存在的表"></a>链中的规则存在的表</h2><p>chain中存放了rule，某些chain中注定不包含某些rule。例如prerouting链中的rule仅存在于nat raw mangle三张表中。</p>
@@ -549,10 +549,11 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables -t raw -A OUTPUT -p icmp -m comment --comment &quot;TRACE&quot; -j trace</span><br><span class="line">iptables -t raw -A PREROUTING -p icmp -m comment --comment &quot;TRACE&quot; -j TRACE</span><br></pre></td></tr></table></figure>
 <p>追踪日志最终会在/var/log/message或者/var/log/kern下看到：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Feb  6 11:22:04 c43k09006.cloud.k09.am17 kernel: TRACE: raw:PREROUTING:policy:3 IN=docker0 OUT= PHYSIN=bond0.9 MAC=02:42:30:fb:43:94:5c:c9:99:de:c4:8b:08:00 SRC=10.45.8.10 DST=10.45.4.99 LEN=84 TOS=0x00 PREC=0x00 TTL=62 ID=25550 DF PROTO=ICMP TYPE=0 CODE=0 ID=24191 SEQ=2</span><br></pre></td></tr></table></figure>
-<p>环境清理，删除刚刚创建的规则即可：</p>
+<p>环境清理，删除刚刚创建的规则即可，其中1为规则的编号：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables -t raw -D PREROUTING 1</span><br><span class="line">iptables -t raw -D OUTPUT 1</span><br></pre></td></tr></table></figure>
 <h1 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h1><ul>
 <li><a href="http://www.zsythink.net/archives/tag/iptables/page/2/" target="_blank" rel="noopener">iptables详解系列</a></li>
+<li><a href="https://www.frozentux.net/iptables-tutorial/iptables-tutorial.html#ACCEPTTARGET" target="_blank" rel="noopener">Iptables Tutorial 1.2.2</a></li>
 </ul>
 
       
