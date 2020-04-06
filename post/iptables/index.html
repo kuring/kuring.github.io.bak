@@ -120,7 +120,7 @@
 <meta property="og:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/common/Netfilter-packet-flow.svg">
 <meta property="og:image" content="http://kuring.me/images/iptables1.png">
 <meta property="og:image" content="http://kuring.me/images/iptables2.png">
-<meta property="og:updated_time" content="2020-02-10T15:11:41.109Z">
+<meta property="og:updated_time" content="2020-04-06T16:01:25.375Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iptables基本知识">
 <meta name="twitter:description" content="netfilter与iptables的关系linux在内核中对数据包过滤和修改的模块为netfilter，netfilter模块本身并不对数据包进行过滤，只是允许将过滤数据包或修改数据包的函数hook到内核网络协议栈的适当位置。  iptables是用户态的工具，用于向netfilter中添加规则从而实现报文的过滤和修改等功能，工作在ip层。ebtables工作在数据链路层，用于处理以太网帧。 图">
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-02-10 23:11:41" itemprop="dateModified" datetime="2020-02-10T23:11:41+08:00">2020-02-10</time>
+                <time title="Modified: 2020-04-07 00:01:25" itemprop="dateModified" datetime="2020-04-07T00:01:25+08:00">2020-04-07</time>
               
             
           </span>
@@ -484,7 +484,8 @@
 <h2 id="nat"><a href="#nat" class="headerlink" title="nat"></a>nat</h2><p>管理后端主机进出，与linux主机没有关系，与linux后的主机有关</p>
 <p>prerouting：进行路由判断之前的规则(dnat/redirect)<br>postrouting：路由判断之后执行的规则(snat/masquerade)<br>output：与发出去的包有关</p>
 <h2 id="mangle"><a href="#mangle" class="headerlink" title="mangle"></a>mangle</h2><p>较少使用，用于拆解报文，修改数据包，并重新封装。</p>
-<h2 id="raw"><a href="#raw" class="headerlink" title="raw"></a>raw</h2><h1 id="rule"><a href="#rule" class="headerlink" title="rule"></a>rule</h1><p>包含了匹配条件和处理动作。</p>
+<h2 id="raw"><a href="#raw" class="headerlink" title="raw"></a>raw</h2><p>raw表的主要作用是允许我们给某些特定的数据包打上标记。</p>
+<h1 id="rule"><a href="#rule" class="headerlink" title="rule"></a>rule</h1><p>包含了匹配条件和处理动作。</p>
 <p>匹配条件包括：source ip、destination ip、source port、destination port</p>
 <p>处理动作包括：</p>
 <ul>
