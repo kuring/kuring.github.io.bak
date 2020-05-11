@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[本地连接远程的内网k8s集群]]></title>
+      <url>%2Fpost%2Flocal-connect-remote-k8s%2F</url>
+      <content type="text"><![CDATA[在日常开发的过程中，经常会需要在本地开发的程序需要在k8s中调试的场景，比如，写了一个operator。如果此时，本地又没有可以直接可达的k8s集群，比如k8s是在公有云的vpc环境内，外面无法直接访问。此时，ssh又是可以直接通过公网vip访问的vpc的网络内的。为了满足此类需要，可以采用ssh tunnel的方式来打通本地跟远程的k8s集群。 1. 本地建立ssh tunnel到远程集群网络mac用户可以通过SSH TUNNEL这个软件来在界面上自动化配置，具体的配置方式如下： 需要增加一个ssh的动态代理，监听本地的9909端口号。 2. 将远程集群的kubeconfig文件复制到本地将k8s集群中~/.kube/config文件复制到本地的~/.kube/config目录下 3. 在命令行中执行kubectl命令在命令行中配置http和https代理 12export http_proxy=127.0.0.1:9909export https_proxy=127.0.0.1:9909 然后至此就可以通过kubectl命令来访问远程的k8s集群了。]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[conntrack介绍]]></title>
       <url>%2Fpost%2Fconntrack%2F</url>
       <content type="text"><![CDATA[conntrack是netfilter提供的连接跟踪机制，允许内核识别出数据包属于哪个连接。是iptables实现状态匹配(-m state)以及nat的基础，由单独的内核模块nf_conntrack实现。 conntrack在图中有两处，一处位于prerouting，一处位于output。主机自身进程产生的数据包会经过output链的conntrack，主机的网络设备接收到的数据包会通过prerouting链的conntrack。 每个通过conntrack的数据包，内核会判断是否为新的连接。如果是新的连接，则在连接跟踪表中插入一条记录。如果是已有连接，会更新连接跟踪表中的记录。 需要特别注意的是，conntrack并不会修改数据包，如dnat、snat，而仅仅是维护连接跟踪表。 连接跟踪表的内容/proc/net/nf_conntrack可以看到连接跟踪表的所有内容，通过hash表来实现。 1ipv4 2 tcp 6 117 TIME_WAIT src=10.45.4.124 dst=10.45.8.10 sport=36903 dport=8080 src=10.45.8.10 dst=10.45.4.124 sport=8080 dport=36903 [ASSURED] mark=0 zone=0 use=2 117: 该连接的生存时间，每个连接都有一个timeout值，可以通过内核参数进行设置，如果超过该时间还没有报文到达，该连接将会删除。如果有新的数据到达，该计数会被重置。 TIME_WAIT: 当前该连接的最新状态 涉及到的内核参数 net.netfilter.nf_conntrack_buckets: 用来设置hash表的大小 net.netfilter.nf_conntrack_max: 用来设置连接跟踪表的数据条数上限 iptables与conntrack的关系iptables使用-m state模块来从连接跟踪表查找数据包的状态，上面例子中的TIME_WAIT即为连接跟踪表中的状态，但这些状态对应到iptable中就只有五种状态。特别需要注意的是，这五种状态是跟具体的协议是tcp、udp无关的。 状态 含义 NEW 匹配连接的第一个包 ESTABLISHED NEW状态后，如果对端有回复包，此时连接状态为NEW RELATED 不是太好理解，当已经有一个状态为ESTABLISHED连接后，如果又产生了一个新的连接并且跟此时关联的，那么该连接就是RELATED状态的。对于ftp协议而言，有控制连接和数据连接，控制连接要先建立为ESTABLISHED，数据连接就变为控制连接的RELATED。那么conntrack怎么能够识别到两个连接是有关联的呢，即能够识别出协议相关的内容，这就需要通过扩展模块来完成了，比如ftp就需要nf_conntrack_ftp INVALID 无法识别的或者有状态的数据包 UNTRACKED 匹配带有NOTRACK标签的数据包，raw表可以将数据包标记为NOTRACK，这种数据包的连接状态为NOTRACK conntrack-tools12# 查看连接跟踪表conntrack -L reference 云计算底层技术-netfilter框架研究]]></content>
