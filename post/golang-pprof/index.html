@@ -117,13 +117,13 @@
 <meta property="og:site_name" content="伊图">
 <meta property="og:description" content="golang中的pprof工具可以分析系统问题，开启pprof功能非常简单，即在import中增加_ &amp;quot;net/http/pprof&amp;quot;的导入即可，然后通过http调用/debug/pprof接口即可在web界面上看到pprof的相关信息。 golang 1.11版本中已经自带了火焰图功能，火焰图为性能分析的利器，可以快速找到程序性能的瓶颈。不再需要使用go-torch项目。 查">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://kuring.me/images/pprof_graph.png">
-<meta property="og:image" content="https://kuring.me/images/pprof_flame.png">
-<meta property="og:updated_time" content="2019-07-06T08:01:57.156Z">
+<meta property="og:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/pprof_graph.png">
+<meta property="og:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/pprof_flame.png">
+<meta property="og:updated_time" content="2020-07-30T16:57:40.213Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="golang使用pprof分析程序性能瓶颈">
 <meta name="twitter:description" content="golang中的pprof工具可以分析系统问题，开启pprof功能非常简单，即在import中增加_ &amp;quot;net/http/pprof&amp;quot;的导入即可，然后通过http调用/debug/pprof接口即可在web界面上看到pprof的相关信息。 golang 1.11版本中已经自带了火焰图功能，火焰图为性能分析的利器，可以快速找到程序性能的瓶颈。不再需要使用go-torch项目。 查">
-<meta name="twitter:image" content="https://kuring.me/images/pprof_graph.png">
+<meta name="twitter:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/pprof_graph.png">
 
 
 
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-06 16:01:57" itemprop="dateModified" datetime="2019-07-06T16:01:57+08:00">2019-07-06</time>
+                <time title="Modified: 2020-07-31 00:57:40" itemprop="dateModified" datetime="2020-07-31T00:57:40+08:00">2020-07-31</time>
               
             
           </span>
@@ -465,8 +465,8 @@
 <p>程序运行后调用程序的<code>/debug/pprof/profile</code>http接口，可获取到cpu profile数据文件。例如，在服务器上可以执行运行<code>wget http://10.103.34.138:3300/debug/pprof/profile</code>命令，将profile文件下载到另外一台分析的服务器上。</p>
 <p>在分析服务器上执行<code>go tool pprof -http=&quot;10.103.17.184:20000&quot; transfer profile</code></p>
 <p>在浏览器中打开<code>10.103.17.184:20000</code>即可得到性能分析的结果。</p>
-<p><img src="https://kuring.me/images/pprof_graph.png" alt="调用关系图"></p>
-<p><img src="https://kuring.me/images/pprof_flame.png" alt="火焰图"></p>
+<p><img src="https://kuring.oss-cn-beijing.aliyuncs.com/images/pprof_graph.png" alt="调用关系图"></p>
+<p><img src="https://kuring.oss-cn-beijing.aliyuncs.com/images/pprof_flame.png" alt="火焰图"></p>
 
       
     </div>

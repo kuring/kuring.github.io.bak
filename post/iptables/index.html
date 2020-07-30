@@ -118,9 +118,9 @@
 <meta property="og:description" content="netfilter与iptables的关系linux在内核中对数据包过滤和修改的模块为netfilter，netfilter模块本身并不对数据包进行过滤，只是允许将过滤数据包或修改数据包的函数hook到内核网络协议栈的适当位置。  iptables是用户态的工具，用于向netfilter中添加规则从而实现报文的过滤和修改等功能，工作在ip层。ebtables工作在数据链路层，用于处理以太网帧。 图">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/common/Netfilter-packet-flow.svg">
-<meta property="og:image" content="http://kuring.me/images/iptables1.png">
-<meta property="og:image" content="http://kuring.me/images/iptables2.png">
-<meta property="og:updated_time" content="2020-05-14T16:09:31.781Z">
+<meta property="og:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/iptables1.png">
+<meta property="og:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/iptables2.png">
+<meta property="og:updated_time" content="2020-07-30T16:58:55.568Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iptables基本知识">
 <meta name="twitter:description" content="netfilter与iptables的关系linux在内核中对数据包过滤和修改的模块为netfilter，netfilter模块本身并不对数据包进行过滤，只是允许将过滤数据包或修改数据包的函数hook到内核网络协议栈的适当位置。  iptables是用户态的工具，用于向netfilter中添加规则从而实现报文的过滤和修改等功能，工作在ip层。ebtables工作在数据链路层，用于处理以太网帧。 图">
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-05-15 00:09:31" itemprop="dateModified" datetime="2020-05-15T00:09:31+08:00">2020-05-15</time>
+                <time title="Modified: 2020-07-31 00:58:55" itemprop="dateModified" datetime="2020-07-31T00:58:55+08:00">2020-07-31</time>
               
             
           </span>
@@ -469,7 +469,7 @@
 <li>PREROUTING 链：报文到达本机，进行路由决策之前</li>
 <li>POSTROUTING 链：报文由本机发出，进行路由决策之后</li>
 </ul>
-<p><img src="http://kuring.me/images/iptables1.png" alt="image"></p>
+<p><img src="https://kuring.oss-cn-beijing.aliyuncs.com/images/iptables1.png" alt="image"></p>
 <p>从chain的角度考虑数据包的流向：</p>
 <ul>
 <li>到本机某进程的报文：PREROUTING -&gt; INPUT</li>
@@ -501,7 +501,7 @@
 <h2 id="链中的规则存在的表"><a href="#链中的规则存在的表" class="headerlink" title="链中的规则存在的表"></a>链中的规则存在的表</h2><p>chain中存放了rule，某些chain中注定不包含某些rule。例如prerouting链中的rule仅存在于nat raw mangle三张表中。</p>
 <p>prerouting链中的规则存在的表：raw mangle nat<br>input链中的规则存在的表：mangle filter nat<br>forward链中的规则存在的表：mangle filter<br>output链中的规则存在的表：raw mangle filter nat<br>postrouting链中的规则存在的表：mangle nat</p>
 <h2 id="表中的规则可以被哪些链使用"><a href="#表中的规则可以被哪些链使用" class="headerlink" title="表中的规则可以被哪些链使用"></a>表中的规则可以被哪些链使用</h2><p>raw表中的规则可以被链使用：prerouting output</p>
-<p><img src="http://kuring.me/images/iptables2.png" alt="image"></p>
+<p><img src="https://kuring.oss-cn-beijing.aliyuncs.com/images/iptables2.png" alt="image"></p>
 <p>表的名字为小写，链的名字为大写</p>
 <h1 id="command"><a href="#command" class="headerlink" title="command"></a>command</h1><h2 id="query"><a href="#query" class="headerlink" title="query"></a>query</h2><ul>
 <li>-t 用于指定要操作的表，支持raw mangle filter nat，省略-t选项，默认使用filter表</li>

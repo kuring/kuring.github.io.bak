@@ -118,12 +118,12 @@
 <meta property="og:site_name" content="伊图">
 <meta property="og:description" content="一直对堆排序算法用的不错，但是又是在排序中挺重要的算法，并且可以求解其他问题，比如top k问题。已经对堆排序学习过好多次了，无奈每次都记不太清楚具体的细节问题，本文对堆的问题进行整理。本文的排序例子来源于严蔚敏的《数据结构》，本文的知识点来自《算法导论》。 最大堆为堆中的最大元素位于根节点，顾名思义，最小堆的根节点为最小值。堆的性质决定了堆中节点一定大于等于其子节点。在堆排序算法中用到的是最大堆">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://kuring.me/images/heap_sort_create.png">
-<meta property="og:updated_time" content="2019-07-06T08:01:57.151Z">
+<meta property="og:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/heap_sort_create.png">
+<meta property="og:updated_time" content="2020-07-30T16:57:40.213Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大顶堆小顶堆与堆排序">
 <meta name="twitter:description" content="一直对堆排序算法用的不错，但是又是在排序中挺重要的算法，并且可以求解其他问题，比如top k问题。已经对堆排序学习过好多次了，无奈每次都记不太清楚具体的细节问题，本文对堆的问题进行整理。本文的排序例子来源于严蔚敏的《数据结构》，本文的知识点来自《算法导论》。 最大堆为堆中的最大元素位于根节点，顾名思义，最小堆的根节点为最小值。堆的性质决定了堆中节点一定大于等于其子节点。在堆排序算法中用到的是最大堆">
-<meta name="twitter:image" content="https://kuring.me/images/heap_sort_create.png">
+<meta name="twitter:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/heap_sort_create.png">
 
 
 
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-06 16:01:57" itemprop="dateModified" datetime="2019-07-06T16:01:57+08:00">2019-07-06</time>
+                <time title="Modified: 2020-07-31 00:57:40" itemprop="dateModified" datetime="2020-07-31T00:57:40+08:00">2020-07-31</time>
               
             
           </span>
@@ -459,7 +459,7 @@
 <p>最大堆为堆中的最大元素位于根节点，顾名思义，最小堆的根节点为最小值。堆的性质决定了堆中节点一定大于等于其子节点。在堆排序算法中用到的是最大堆，最小堆用于构造优先队列，要是使用最小堆进行排序，得到的排序结果为倒序。</p>
 <p>堆的结构为完全二叉树，因此可以用数组存储来代替树的链式存储结构。</p>
 <h1 id="建最大堆过程"><a href="#建最大堆过程" class="headerlink" title="建最大堆过程"></a>建最大堆过程</h1><p>我这里通过图表的形式对建大顶堆的过程进行了展示，不再对文字进行叙述。在堆排序的过程中会不断进行建最大堆过程的调用。</p>
-<p><img src="https://kuring.me/images/heap_sort_create.png" alt="堆的初始化"></p>
+<p><img src="https://kuring.oss-cn-beijing.aliyuncs.com/images/heap_sort_create.png" alt="堆的初始化"></p>
 <h1 id="堆排序的核心步骤"><a href="#堆排序的核心步骤" class="headerlink" title="堆排序的核心步骤"></a>堆排序的核心步骤</h1><p>清楚了堆的初始化，再看一下下面的堆排序步骤就非常清楚了，不需要图片进行描述了。堆排序的步骤：</p>
 <ol>
 <li>将待排序的数组初始化为大顶堆，该过程即建堆。</li>

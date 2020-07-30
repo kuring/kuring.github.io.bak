@@ -118,13 +118,13 @@
 <meta property="og:site_name" content="伊图">
 <meta property="og:description" content="本文绝大多数题目来源于网络，部分题目为原创。 slice相关以下代码有什么问题，说明原因12345678910111213141516type student struct &amp;#123;	Name string	Age  int&amp;#125;func pase_student() &amp;#123;	m := make(map[string]*student)	stus := []student&amp;#123">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://kuring.me/images/golang_string.png">
-<meta property="og:image" content="https://kuring.me/images/golang_interview_1.jpeg">
-<meta property="og:updated_time" content="2019-07-06T08:01:57.156Z">
+<meta property="og:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/golang_string.png">
+<meta property="og:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/golang_interview_1.jpeg">
+<meta property="og:updated_time" content="2020-07-30T16:57:40.214Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Golang面试题">
 <meta name="twitter:description" content="本文绝大多数题目来源于网络，部分题目为原创。 slice相关以下代码有什么问题，说明原因12345678910111213141516type student struct &amp;#123;	Name string	Age  int&amp;#125;func pase_student() &amp;#123;	m := make(map[string]*student)	stus := []student&amp;#123">
-<meta name="twitter:image" content="https://kuring.me/images/golang_string.png">
+<meta name="twitter:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/golang_string.png">
 
 
 
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-06 16:01:57" itemprop="dateModified" datetime="2019-07-06T16:01:57+08:00">2019-07-06</time>
+                <time title="Modified: 2020-07-31 00:57:40" itemprop="dateModified" datetime="2020-07-31T00:57:40+08:00">2020-07-31</time>
               
             
           </span>
@@ -549,9 +549,9 @@
 <p>Mutex对象不能被值拷贝,后续传递需要使用指针的形式</p>
 <h2 id="以下代码输出是什么-解释一下"><a href="#以下代码输出是什么-解释一下" class="headerlink" title="以下代码输出是什么 解释一下"></a>以下代码输出是什么 解释一下</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">func    main()  &#123;</span><br><span class="line">    case1()</span><br><span class="line">    case2()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func    case1() &#123;</span><br><span class="line">   s1   :=  make([]string,  1,  20)</span><br><span class="line">   s1[0]    =   &quot;hello&quot;</span><br><span class="line">   p1   :=  &amp;s1[0]</span><br><span class="line">   s1   =   append(s1,  &quot;world&quot;)</span><br><span class="line">   *p1  =   &quot;hello2&quot;</span><br><span class="line">   fmt.Printf(&quot;value    of  p1  is  %s, value   of  s1[0]   is  %s  \n&quot;,    *p1,    s1[0])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func    case2() &#123;</span><br><span class="line">   s1   :=  make([]string)</span><br><span class="line">   s1[0]    =   &quot;hello&quot;</span><br><span class="line">   p1   :=  &amp;s1[0]</span><br><span class="line">   s1   =   append(s1,  &quot;world&quot;)</span><br><span class="line">   *p1  =   &quot;hello2&quot;</span><br><span class="line">   fmt.Printf(&quot;value    of  p1  is  %s, value   of  s1[0]   is  %s  \n&quot;,    *p1,    s1[0])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>本题意在考察string和slice的数据结构，string的数据结构如下：</p>
-<p><img src="https://kuring.me/images/golang_string.png" alt="http://research.swtch.com/godata2.png"></p>
+<p><img src="https://kuring.oss-cn-beijing.aliyuncs.com/images/golang_string.png" alt="http://research.swtch.com/godata2.png"></p>
 <p>case1的内存结构变化情况如下：</p>
-<p><img src="https://kuring.me/images/golang_interview_1.jpeg" alt></p>
+<p><img src="https://kuring.oss-cn-beijing.aliyuncs.com/images/golang_interview_1.jpeg" alt></p>
 <p>case2由于s1默认长度为0，直接使用s1[0]复制会出现panic错误。</p>
 <h1 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h1><ul>
 <li><a href="https://zhuanlan.zhihu.com/p/26972862" target="_blank" rel="noopener">golang 面试题

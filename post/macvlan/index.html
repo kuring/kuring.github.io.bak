@@ -118,12 +118,12 @@
 <meta property="og:site_name" content="伊图">
 <meta property="og:description" content="macvlan的原理是在宿主机物理网卡上虚拟出多个子接口，每个子接口有独立的mac地址，通过不同的MAC地址在数据链路层（Data Link Layer）进行网络数据转发的。达到的效果类似，一块物理网卡上有多个IP地址，多个IP地址有自己的mac地址。 它是比较新的网络虚拟化技术，需要较新的内核支持（Linux kernel v3.9–3.19 and 4.0+）。 macvlan设备跟物理设备之">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://kuring.me/images/macvlan-workmode-1.png">
-<meta property="og:updated_time" content="2020-01-31T16:41:13.238Z">
+<meta property="og:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/macvlan-workmode-1.png">
+<meta property="og:updated_time" content="2020-07-30T16:58:55.472Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux macvlan network">
 <meta name="twitter:description" content="macvlan的原理是在宿主机物理网卡上虚拟出多个子接口，每个子接口有独立的mac地址，通过不同的MAC地址在数据链路层（Data Link Layer）进行网络数据转发的。达到的效果类似，一块物理网卡上有多个IP地址，多个IP地址有自己的mac地址。 它是比较新的网络虚拟化技术，需要较新的内核支持（Linux kernel v3.9–3.19 and 4.0+）。 macvlan设备跟物理设备之">
-<meta name="twitter:image" content="http://kuring.me/images/macvlan-workmode-1.png">
+<meta name="twitter:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/macvlan-workmode-1.png">
 
 
 
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-02-01 00:41:13" itemprop="dateModified" datetime="2020-02-01T00:41:13+08:00">2020-02-01</time>
+                <time title="Modified: 2020-07-31 00:58:55" itemprop="dateModified" datetime="2020-07-31T00:58:55+08:00">2020-07-31</time>
               
             
           </span>
@@ -468,7 +468,7 @@
 <h3 id="Passthru"><a href="#Passthru" class="headerlink" title="Passthru"></a>Passthru</h3><p>后来增加的模式，比较少用</p>
 <p>vepa和passthru都会将不同macvlan接口之间的数据发送到交换机，然后发回，对性能的影响比较明显。</p>
 <p>物理网卡收到包后，根据包的mac地址来判断这个包交给哪个虚拟接口。</p>
-<p><img src="http://kuring.me/images/macvlan-workmode-1.png" alt="image"></p>
+<p><img src="https://kuring.oss-cn-beijing.aliyuncs.com/images/macvlan-workmode-1.png" alt="image"></p>
 <h2 id="手工创建实践"><a href="#手工创建实践" class="headerlink" title="手工创建实践"></a>手工创建实践</h2><p>以下实验为在virturalbox虚拟机下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 创建两个network namespace net1和net2</span><br><span class="line">ip netns add net1</span><br><span class="line">ip netns add net2</span><br><span class="line"></span><br><span class="line"># 创建macvlan接口</span><br><span class="line"># enp0s8相当于物理网卡eth0</span><br><span class="line">ip link add link enp0s8 mac1 type macvlan</span><br><span class="line"></span><br><span class="line"># 可以看到创建了接口mac1@enp0s8</span><br><span class="line">[root@localhost vagrant]# ip link</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">2: enp0s3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000</span><br><span class="line">    link/ether 08:00:27:6c:3e:95 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">3: enp0s8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000</span><br><span class="line">    link/ether 08:00:27:cf:b0:b4 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">4: docker_gwbridge: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc noqueue state DOWN mode DEFAULT</span><br><span class="line">    link/ether 02:42:8e:cf:a9:da brd ff:ff:ff:ff:ff:ff</span><br><span class="line">5: br-b3e83aa45886: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc noqueue state DOWN mode DEFAULT</span><br><span class="line">    link/ether 02:42:bf:b4:e5:36 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">6: docker0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc noqueue state DOWN mode DEFAULT</span><br><span class="line">    link/ether 02:42:25:e7:40:32 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">19: br-ec6c4e77321d: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu 1500 qdisc noqueue state DOWN mode DEFAULT</span><br><span class="line">    link/ether 02:42:e0:d8:38:6d brd ff:ff:ff:ff:ff:ff</span><br><span class="line">24: mac1@enp0s8: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN mode DEFAULT</span><br><span class="line">    link/ether 3e:b8:e9:1d:3b:c8 brd ff:ff:ff:ff:ff:ff</span><br></pre></td></tr></table></figure>
 <p>创建macvlan接口的格式为：<code>ip link add link &lt;PARENT&gt; &lt;NAME&gt; type macvlan</code>， <parent>是macvlan接口的父接口名称，name是新创建的macvlan接口名称。</parent></p>

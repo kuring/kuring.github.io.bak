@@ -117,13 +117,13 @@
 <meta property="og:site_name" content="伊图">
 <meta property="og:description" content="常用垃圾回收方法1.引用计数类似于C++中的智能指针，每个对象维护一个引用计数，当对象被销毁时引用计数减一，当引用计数为0时立即回收对象。 在PHP、Python中使用，适用于内存比较紧张和实时性比较高的系统。 缺点：  由于频繁更新引用计数，降低了性能。 循环引用问题。解决办法为避免循环引用。  2.标记(mark)-清除(sweep)分为标记和清除两个阶段，算法在70年代就提出了，非常古老的算">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://kuring.me/images/golang-gc.gif">
-<meta property="og:image" content="https://kuring.me/images/golang-gc-2.png">
-<meta property="og:updated_time" content="2019-07-06T08:01:57.155Z">
+<meta property="og:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/golang-gc.gif">
+<meta property="og:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/golang-gc-2.png">
+<meta property="og:updated_time" content="2020-07-30T16:57:40.214Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Golang GC">
 <meta name="twitter:description" content="常用垃圾回收方法1.引用计数类似于C++中的智能指针，每个对象维护一个引用计数，当对象被销毁时引用计数减一，当引用计数为0时立即回收对象。 在PHP、Python中使用，适用于内存比较紧张和实时性比较高的系统。 缺点：  由于频繁更新引用计数，降低了性能。 循环引用问题。解决办法为避免循环引用。  2.标记(mark)-清除(sweep)分为标记和清除两个阶段，算法在70年代就提出了，非常古老的算">
-<meta name="twitter:image" content="https://kuring.me/images/golang-gc.gif">
+<meta name="twitter:image" content="https://kuring.oss-cn-beijing.aliyuncs.com/images/golang-gc.gif">
 
 
 
@@ -412,7 +412,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-06 16:01:57" itemprop="dateModified" datetime="2019-07-06T16:01:57+08:00">2019-07-06</time>
+                <time title="Modified: 2020-07-31 00:57:40" itemprop="dateModified" datetime="2020-07-31T00:57:40+08:00">2020-07-31</time>
               
             
           </span>
@@ -469,7 +469,7 @@
 <p>标记阶段，都会Stop The World，会大大降低性能。</p>
 <h3 id="3-分代回收"><a href="#3-分代回收" class="headerlink" title="3.分代回收"></a>3.分代回收</h3><p>将堆划分为两个或者多个代空间，新创建的对象存放于新生代，随着垃圾回收的重复执行，生命周期较长的对象会被放到老年代中。新生代和老年代采用不同的垃圾回收策略。</p>
 <h2 id="Go垃圾回收机制"><a href="#Go垃圾回收机制" class="headerlink" title="Go垃圾回收机制"></a>Go垃圾回收机制</h2><p>Go中采用三色标记算法，本质上还是标记清除算法，但是对标记阶段有改进。</p>
-<p><img src="https://kuring.me/images/golang-gc.gif" alt="https://upload.wikimedia.org/wikipedia/commons/1/1d/Animation_of_tri-color_garbage_collection.gif"></p>
+<p><img src="https://kuring.oss-cn-beijing.aliyuncs.com/images/golang-gc.gif" alt="https://upload.wikimedia.org/wikipedia/commons/1/1d/Animation_of_tri-color_garbage_collection.gif"></p>
 <p>步骤如下：</p>
 <ol>
 <li>开始时，所有的对象均为白色</li>
@@ -480,7 +480,7 @@
 </ol>
 <p>优点：用户程序和标记操作可以并行执行。</p>
 <p>详细过程如下图：</p>
-<p><img src="https://kuring.me/images/golang-gc-2.png" alt></p>
+<p><img src="https://kuring.oss-cn-beijing.aliyuncs.com/images/golang-gc-2.png" alt></p>
 <p>通过上图可以看出，STW有两个过程：</p>
 <ol>
 <li>gc开始的时候，需要一些准备工作，如开启write barrier</li>
